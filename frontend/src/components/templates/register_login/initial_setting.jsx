@@ -4,21 +4,27 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Title from "@/components/atoms/Title";
 import NumberInput from "@/components/atoms/NumberInput";
-import Text from "@/components/atoms/Text";
 import Calendar from "@/components/atoms/Calendar";
 import RadioButton from "@/components/atoms/RadioButton";
 import Button from "@/components/atoms/Button";
 import BasicAlert from "@/components/atoms/Alert";
-import questions from "@/public/setting_questions.json";
 
-const InitialSetting = () => {
+const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState({});
 
     const currentQuestion = questions[currentQuestionIndex];
 
+    const handleAnswerChange = (id, value) => {
+        const newAnswers = { ...answers, [id]: value };
+        onAnswersUpdate(newAnswers);
+      };
+
     const handleNext = () => {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        if (currentQuestionIndex < questions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else {
+            onNext();
+        }
     };
 
     const handlePrevious = () => {
@@ -26,10 +32,6 @@ const InitialSetting = () => {
             setCurrentQuestionIndex(currentQuestionIndex - 1);
         }
     };
-
-    const handleAnswerChange = (id, value) => {
-        setAnswers((prev) => ({ ...prev, [id]: value }));
-      };
 
     const renderAnswerInput = () => {
         switch (currentQuestion.type) {
