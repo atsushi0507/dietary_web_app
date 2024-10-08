@@ -1,14 +1,23 @@
-"use client";
-import React from "react";
+"use client"; // クライアントサイドで動作することを宣言
+
+import React, { useState } from "react";
 import styled from "styled-components";
 import Link from "../atoms/Link";
 import Button from "../atoms/Button";
+import { useRouter } from "next/navigation"; // クライアントサイドでのみ動作するフック
 
 const Header = () => {
+    const router = useRouter(); // クライアント側で動作するはず
+    const [isLogin, setIsLogin] = useState(false);
+
     const clickLogoutButton = () => {
-        // ログアウトロジックを実装する
         console.log("ログアウトボタンが押されました");
-    }
+        // ログアウト処理の実装を行う
+    };
+
+    const clickLoginButton = () => {
+        router.push('/register_login'); // クライアントサイドでページ遷移
+    };
 
     return (
         <HeaderContaint>
@@ -18,7 +27,10 @@ const Header = () => {
                 <Link to="/history" external={false}>履歴・登録</Link>
                 <Link to="/dashboard" external={false}>ダッシュボード・評価</Link>
             </Nav>
-            <Button onClick={clickLogoutButton}>ログアウト</Button>
+            {isLogin
+            ? <Button onClick={clickLogoutButton}>ログアウト</Button>
+            : <Button onClick={clickLoginButton}>ログイン</Button>
+            }
         </HeaderContaint>
     );
 };
@@ -32,14 +44,14 @@ const HeaderContaint = styled.header`
     padding: 1rem 2rem;
     background-color: #f8f9fa;
     border-bottom: 1px solid #e0e0e0;
-`
+`;
 
 const Logo = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
-`
+`;
 
 const Nav = styled.nav`
     display: flex;
     gap: 1.5rem;
-`
+`;

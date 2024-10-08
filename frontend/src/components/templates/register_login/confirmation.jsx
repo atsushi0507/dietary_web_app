@@ -3,7 +3,7 @@ import React from "react";
 import Title from "@/components/atoms/Title";
 import Button from "@/components/atoms/Button";
 
-const ConfirmationTemplate = ({ answers, questions, onEdit }) => {
+const ConfirmationTemplate = ({ answers, questions, onEdit, onNext }) => {
   return (
     <div>
       <Title>確認画面</Title>
@@ -16,7 +16,7 @@ const ConfirmationTemplate = ({ answers, questions, onEdit }) => {
       </ul>
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
         <Button onClick={onEdit}>戻る</Button>
-        <Button onClick={() => alert("完了しました！")}>完了</Button>
+        <Button onClick={onNext}>次へ</Button>
       </div>
     </div>
   );

@@ -7,8 +7,13 @@ import dayjs from 'dayjs';
 
 dayjs.locale("ja");
 
-const Calendar = () => {
+const Calendar = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (newValue) => {
+    setSelectedDate(newValue);
+    onDateChange(newValue);  // 親コンポーネントに選択された日付を渡す
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -17,7 +22,8 @@ const Calendar = () => {
         format="YYYY/MM/DD"
         slotProps={{ calendarHeader: { format: 'YYYY年MM月' } }}
         value={selectedDate}
-        onChange={(newValue) => setSelectedDate(newValue)}
+        // onChange={(newValue) => setSelectedDate(newValue)}
+        onChange={handleDateChange}
         textField={(params) => <input {...params} />}
         maxDate={dayjs()}
       />

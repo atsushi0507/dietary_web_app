@@ -8,6 +8,7 @@ import Calendar from "@/components/atoms/Calendar";
 import RadioButton from "@/components/atoms/RadioButton";
 import Button from "@/components/atoms/Button";
 import BasicAlert from "@/components/atoms/Alert";
+import dayjs from "dayjs";
 
 const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -18,6 +19,11 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
         const newAnswers = { ...answers, [id]: value };
         onAnswersUpdate(newAnswers);
       };
+
+    const handleDateChange = (newDate) => {
+        const formattedDate = newDate ? newDate.format("YYYY/MM/DD") : null; // 日付をフォーマットする
+        handleAnswerChange(currentQuestion.id, formattedDate); // フォーマットした日付を保存
+    };
 
     const handleNext = () => {
         if (currentQuestionIndex < questions.length - 1) {
@@ -39,11 +45,11 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
             return (
             <div>
                 <NumberInput
-                value={answers[currentQuestion.id] || ""}
-                onChange={(e) => handleAnswerChange(currentQuestion.id, e.target.value)}
-                min={currentQuestion.minValue}
-                max={currentQuestion.maxValue}
-                step={0.1}
+                    value={answers[currentQuestion.id] || ""}
+                    onChange={(e) => handleAnswerChange(currentQuestion.id, e.target.value)}
+                    min={currentQuestion.minValue}
+                    max={currentQuestion.maxValue}
+                    step={0.1}
                 />
                 <span>{currentQuestion.unit}</span>
             </div>
@@ -51,8 +57,8 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
         case "date":
             return (
             <Calendar
-                value={answers[currentQuestion.id] || ""}
-                onChange={(date) => handleAnswerChange(currentQuestion.id, date)}
+                value={answers[currentQuestion.id] ? dayjs(answers[currentQuestion.id]) : null} // 既存の回答がある場合は dayjs オブジェクトに変換
+                onDateChange={handleDateChange}
             />
             );
         case "radio":
