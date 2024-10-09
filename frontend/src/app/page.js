@@ -9,10 +9,17 @@ import Link from "@/components/atoms/Link";
 import { useState } from "react";
 import Calendar from "@/components/atoms/Calendar";
 import ProgressBar from "@/components/atoms/ProgressBar";
+import BasicTab from "@/components/atoms/Tab";
 
 export default function Home() {
   const [isChecked, setIsChecked] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [val, setVal] = useState(0);
+
+  const handleTabChange = (e, newValue) => {
+    console.log(newValue);
+    setVal(newValue);
+  }
 
   const handleCheckBoxChange = (event) => {
     setIsChecked(event.target.checked);
@@ -40,6 +47,8 @@ export default function Home() {
           onChange={handleCheckBoxChange}
           name="terms"
         />
+
+        <BasicTab items={["食事", "体重"]} value={val} onChange={handleTabChange}/>
 
         <div>
           <h1>Progress Bar Example</h1>

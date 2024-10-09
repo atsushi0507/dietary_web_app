@@ -19,9 +19,7 @@ const RadioButton = ({name, value, checked, onChange}) => {
 export default RadioButton;
 
 const SLabel = styled.label`
-
 `
 
 const SRadio = styled.input`
-
 `

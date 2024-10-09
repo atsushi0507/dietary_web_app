@@ -24,8 +24,8 @@ const Header = () => {
             <Logo>アプリのタイトルロゴ</Logo>
             <Nav>
                 <Link to="/" external={false}>ホーム</Link>
-                <Link to="/history" external={false}>履歴・登録</Link>
-                <Link to="/dashboard" external={false}>ダッシュボード・評価</Link>
+                <Link to="/history" external={false}>記録</Link>
+                <Link to="/dashboard" external={false}>評価・ダッシュボード</Link>
             </Nav>
             {isLogin
             ? <Button onClick={clickLogoutButton}>ログアウト</Button>

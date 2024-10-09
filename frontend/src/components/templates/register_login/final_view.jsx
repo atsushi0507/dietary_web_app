@@ -34,7 +34,7 @@ const FinalView = ({ answers, onPrevious}) => {
                 </FactorArea>
                 <FactorArea>
                     <Text fontWeight="bold">
-                        タンパク質: 
+                        炭水化物: 
                     </Text>
                     <span>{carbs} g</span>
                 </FactorArea>
