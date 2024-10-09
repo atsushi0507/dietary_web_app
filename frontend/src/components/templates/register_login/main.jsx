@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Title from "@/components/atoms/Title";
 import TextInput from "@/components/atoms/TextInput";
@@ -8,6 +8,10 @@ import Text from "@/components/atoms/Text";
 import Link from "@/components/atoms/Link";
 
 const Main = ({ onRegisterClick, onResetClick }) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+
     const onClickLoginButton = () => {
         console.log("ログインボタンが押されました");
     }
@@ -22,15 +26,17 @@ const Main = ({ onRegisterClick, onResetClick }) => {
                     placeholder="メールアドレス"
                     name="email"
                     type="email"
+                    value={email}
                     required={true}
-                    pattern=""
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextInput
                     placeholder="パスワード"
                     name="password"
                     type="password"
+                    value={password}
                     required={true}
-                    pattern=""
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button onClick={onClickLoginButton}>
                     ログイン

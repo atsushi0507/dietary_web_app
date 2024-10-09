@@ -6,9 +6,22 @@ import TextInput from "@/components/atoms/TextInput";
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import usePasswordValidation from "@/hooks/usePasswordValidation";
 
 const PasswordReset = () => {
     const [status, setStatus] = useState("ok");
+    const [password, setPassword] = useState("");
+    const [validPw, setValidPw] = useState("");
+    const {isValidPassword, validatePassword} = usePasswordValidation();
+
+    const isMatchedPassword = ({ password, validPw }) => {
+        if (password === validPw) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const onClickButton = () => {
         console.log("送信ボタンが押されました");
     }
@@ -21,18 +34,21 @@ const PasswordReset = () => {
                 <TextInput 
                     type="password"
                     name="password"
+                    value={password}
                     placeholder="パスワード"
                     required={true}
-                    pattern=""
+                    onChange={(e) => setPassword(e.target.value)}
+                    onBlur={() => validatePassword(password)}
                 />
                 <TextInput
                     type="password"
                     name="password_valid"
+                    value={validPw}
                     placeholder="パスワード(確認用)"
                     required={true}
-                    pattern=""
+                    onChange={(e) => setValidPw(e.target.value)}
                 />
-                <Button onClick={onClickButton}>
+                <Button onClick={onClickButton} disabled={!(isValidPassword && isMatchedPassword({password, validPw}))}>
                     送信
                 </Button>
             </InputForm>

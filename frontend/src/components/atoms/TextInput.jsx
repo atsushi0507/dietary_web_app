@@ -9,7 +9,7 @@ const TextInput = ({
     required = false,
     value = "",
     onChange = () => {},
-    pattern = ""
+    onBlur = () => {}
 }) => {
     return (
         <SInput
@@ -19,7 +19,7 @@ const TextInput = ({
             required={required}
             value={value}
             onChange={onChange}
-            pattern={pattern}
+            onBlur={onBlur}
         />
     );
 };
