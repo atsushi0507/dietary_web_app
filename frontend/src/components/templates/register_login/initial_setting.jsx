@@ -21,8 +21,9 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
       };
 
     const handleDateChange = (newDate) => {
-        const formattedDate = newDate ? newDate.format("YYYY/MM/DD") : null; // 日付をフォーマットする
-        handleAnswerChange(currentQuestion.id, formattedDate); // フォーマットした日付を保存
+        // const formattedDate = newDate ? newDate.format("YYYY/MM/DD") : null; // 日付をフォーマットする
+        // handleAnswerChange(currentQuestion.id, formattedDate); // フォーマットした日付を保存
+        handleAnswerChange(currentQuestion.id, newDate);
     };
 
     const handleNext = () => {
