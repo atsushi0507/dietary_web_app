@@ -12,7 +12,9 @@ const Calendar = ({ onDateChange }) => {
 
   const handleDateChange = (newValue) => {
     setSelectedDate(newValue);
-    onDateChange(newValue);
+
+    const formattedDate = dayjs(newValue).format("YYYY/MM/DD");
+    onDateChange(formattedDate);
   }
 
   return (
