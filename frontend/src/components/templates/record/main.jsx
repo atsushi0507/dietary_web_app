@@ -1,30 +1,48 @@
+"use client";
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";
-import Text from "@/components/atoms/Text";
 import Calendar from "@/components/atoms/Calendar";
 import dayjs from "dayjs";
+import BasicTab from "@/components/atoms/Tab";
+import MealRecord from "./mealRecord";
+import weightRecord from "./weightRecord";
+import WeightRecord from "./weightRecord";
+
+const tabOptions = [
+    "食事",
+    "体重"
+]
 
 const RecordTop = () => {
     const [date, setDate] = useState(dayjs());
+    const [selectedTab, setSelectedTab] = useState(0);
     console.log(date);
+    console.log(selectedTab);
 
     const handleDateChange = (newDate) => {
-        // const formattedDate = newDate ? newDate.format("YYYY/MM/DD") : null;
         setDate(newDate)
     };
 
+    const handleSelectedTab = (e, newValue) => {
+        setSelectedTab(newValue);
+    }
+
     return (
         <Grid container direction="column">
-            <Grid size={4}>
+            <Grid size={12}>
                 <Calendar 
                     value={date}
                     onDateChange={handleDateChange}
                 />
             </Grid>
-            <Grid size={8}>
-                <Text>
-                    Hello2
-                </Text>
+            <Grid size={12}>
+                <BasicTab
+                    items={tabOptions}
+                    value={selectedTab}
+                    onChange={handleSelectedTab}
+                />
+                {selectedTab === 0 && <MealRecord />}
+                {selectedTab === 1 && <WeightRecord />}
             </Grid>
         </Grid>
     );
