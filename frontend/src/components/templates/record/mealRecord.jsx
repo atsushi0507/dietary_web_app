@@ -1,6 +1,8 @@
 import IconButton from "@/components/atoms/IconButton";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import MealRecordDisplay from "./mealRecordDisplay";
+import mealData from "@/public/sampleMeals.json";
 
 const mealType = [
     "朝食",
@@ -10,19 +12,29 @@ const mealType = [
 ];
 
 const MealRecord = () => {
+    const [selectedMeal, setSelectedMeal] = useState(null);
+
+    const handleClickButton = (newValue) => {
+        console.log(`${newValue}`);
+        setSelectedMeal(newValue);
+    }
+
     return (
         <>
             <ButtonArray>
                 {mealType.map((meal) => {
                     return (
-                        <IconButton
-                            key={meal}
-                            text={meal}
-                            onClick={() => console.log(`${meal}`)}
-                        />
+                        <div key={meal}>
+                            <IconButton
+                                key={meal}
+                                text={meal}
+                                onClick={handleClickButton}
+                            />
+                        </div>
                     )
                 })}
             </ButtonArray>
+            <MealRecordDisplay mealData={mealData}/>
         </>
     );
 };

@@ -29,8 +29,8 @@ const SBox = styled(Box)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 16px;
     cursor: pointer;
     transition: background-color 0.3s;

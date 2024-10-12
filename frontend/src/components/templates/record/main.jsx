@@ -5,7 +5,6 @@ import Calendar from "@/components/atoms/Calendar";
 import dayjs from "dayjs";
 import BasicTab from "@/components/atoms/Tab";
 import MealRecord from "./mealRecord";
-import weightRecord from "./weightRecord";
 import WeightRecord from "./weightRecord";
 
 const tabOptions = [

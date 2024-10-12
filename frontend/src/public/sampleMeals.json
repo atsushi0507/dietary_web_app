@@ -1,0 +1,40 @@
+{
+    "mealRecords": {
+      "朝食": [
+        {
+          "name": "ご飯",
+          "calories": 300
+        },
+        {
+          "name": "シャケの塩焼き",
+          "calories": 200
+        },
+        {
+          "name": "味噌汁",
+          "calories": 50
+        },
+        {
+          "name": "納豆",
+          "calories": 148
+        }
+      ],
+      "昼食": [
+        {
+          "name": "カレーライス",
+          "calories": 700
+        },
+        {
+          "name": "コーンサラダ",
+          "calories": 140
+        }
+      ],
+      "夕食": null,
+      "間食": [
+        {
+          "name": "どら焼き",
+          "calories": 128
+        }
+      ]
+    }
+  }
+  
