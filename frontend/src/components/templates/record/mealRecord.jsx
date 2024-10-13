@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import MealRecordDisplay from "./mealRecordDisplay";
 import mealData from "@/public/sampleMeals.json";
+import InputMeal from "./inputMeal";
 
 const mealType = [
     "朝食",
@@ -28,13 +29,14 @@ const MealRecord = () => {
                             <IconButton
                                 key={meal}
                                 text={meal}
-                                onClick={handleClickButton}
+                                onClick={(meal) => handleClickButton(meal)}
                             />
                         </div>
                     )
                 })}
             </ButtonArray>
-            <MealRecordDisplay mealData={mealData}/>
+            {selectedMeal === null && <MealRecordDisplay mealData={mealData} />}
+            {selectedMeal !== null && <InputMeal />}
         </>
     );
 };
