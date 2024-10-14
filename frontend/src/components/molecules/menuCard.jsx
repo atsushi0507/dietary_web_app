@@ -18,7 +18,7 @@ const MenuCard = ({ menuData }) => {
                     {menu}
                 </Typography>
                 <Typography variant="p" sx={{marginLeft: "10px"}}>
-                    {cal} kcal
+                    {cal * volume} kcal
                 </Typography>
             </MenuAndCalorie>
             <VolumeArea>
@@ -38,7 +38,9 @@ const MenuCard = ({ menuData }) => {
 export default MenuCard;
 
 const Card = styled.div`
-
+    border: solid;
+    border-radius: 8px;
+    padding: 4px 8px;
 `
 
 const MenuAndCalorie = styled.div`

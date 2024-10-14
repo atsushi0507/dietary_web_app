@@ -16,13 +16,17 @@ const sampleData = [
     }
 ];
 
-const InputMeal = () => {
+const InputMeal = ({setSelectedMeal}) => {
     const [strMenu, setStrMenu] = useState("");
     const handleSearch = (e) => {
         setStrMenu(e.target.value);
     }
     const onClickSearchButton = () => {
         alert(`${strMenu}を検索します`)
+    }
+
+    const handleSelectedMeal = () => {
+        setSelectedMeal(null);
     }
 
     return (
@@ -38,12 +42,12 @@ const InputMeal = () => {
             />
             <ButtonArray>
                 <Button
-                    onClick={() => alert("食べてないです🍕")}
+                    onClick={handleSelectedMeal}
                 >
                     食べなかった
                 </Button>
                 <Button
-                    onClick={() => alert("完了")}
+                    onClick={handleSelectedMeal}
                 >
                     完了
                 </Button>
@@ -55,7 +59,11 @@ const InputMeal = () => {
 export default InputMeal;
 
 const ButtonArray = styled.div`
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    padding: 0 16px;
 `
