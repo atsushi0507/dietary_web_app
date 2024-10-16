@@ -8,8 +8,8 @@ import MealRecord from "./mealRecord";
 import WeightRecord from "./weightRecord";
 
 const tabOptions = [
-    "食事",
-    "体重"
+    {label: "食事", icon: null},
+    {label: "体重", icon: null}
 ]
 
 const RecordTop = () => {

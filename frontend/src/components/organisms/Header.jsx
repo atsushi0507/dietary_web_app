@@ -23,7 +23,7 @@ const Header = () => {
         <HeaderContaint>
             <Logo>アプリのタイトルロゴ</Logo>
             <Nav>
-                <Link to="/" external={false}>ホーム</Link>
+                <Link to="/home" external={false}>ホーム</Link>
                 <Link to="/record" external={false}>記録</Link>
                 <Link to="/dashboard" external={false}>評価・ダッシュボード</Link>
             </Nav>
