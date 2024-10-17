@@ -83,7 +83,7 @@ const CustomProgressBar = ({ value, maxValue = 100, ranges = [], showGuidelines 
         })}
       </CustomLinearProgress>
 
-      <Typography variant="body2" align="center">{`${value}/${maxValue}`}</Typography>
+      {/* <Typography variant="body2" align="center">{`${value}/${maxValue}`}</Typography> */}
     </Box>
   );
 };
