@@ -1,13 +1,3 @@
-// {/* <CustomProgressBar
-//     value={90}
-//     maxValue={150}
-//     showGuidelines={true}
-//     guidelineValues={[90, 110, 100]} // 150% と 120% に基準線
-//     ranges={[
-//     { start: 80, end: 140, fillColor: 'rgba(0, 255, 0, 0.8)' },
-//     ]}
-// /> */}
-
 "use client";
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";

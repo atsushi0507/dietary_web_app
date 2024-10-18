@@ -29,18 +29,17 @@ const RangeFill = styled('div')((props) => {
       backgroundColor: props.fillColor, // 塗りつぶしの色を適用
       opacity: 0.3,                    // 塗りつぶしの透明度
       zIndex: 100,                       // プログレスバーの下に表示
-      borderRadius: 'inherit',         // 丸みを継承
     };
   });
 
 // 基準線 (動的に leftPosition と color を反映)
-const Guideline = styled('div')(({ leftPosition, color }) => ({
+const Guideline = styled('div')(({ leftPosition, color, lineType, width }) => ({
   position: 'absolute',
   left: `${leftPosition}%`,
   top: 0,
   bottom: 0,
-  width: '2px',
-  borderLeft: `2px dashed ${color}`,
+  width: `2px`,
+  borderLeft: `${width} ${lineType} ${color}`,
   zIndex: 3, // プログレスバーの上に表示
 }));
 
@@ -54,8 +53,6 @@ const CustomProgressBar = ({ value, maxValue = 100, ranges = [], showGuidelines 
       {ranges.map((range, idx) => {
           const leftPosition = (range.start / maxValue) * 100; // 範囲の左側位置
           const width = ((range.end - range.start) / maxValue) * 100; // 範囲の幅
-
-          console.log(`Range ${idx}: leftPosition = ${leftPosition}, width = ${width}`);
 
           return (
             <RangeFill
@@ -77,7 +74,9 @@ const CustomProgressBar = ({ value, maxValue = 100, ranges = [], showGuidelines 
             <Guideline
               key={idx}
               leftPosition={guidelinePosition}
-              color={guidelineValue === maxValue ? 'red' : 'black'} // 100% の基準線は赤、それ以外は黒
+              color={guidelineValue === 100 ? 'red' : 'black'} // 100% の基準線は赤、それ以外は黒
+              lineType={guidelineValue === 100 ? 'solid' : 'dashed'}
+              width={guidelineValue === 100 ? '4px' : '2px'}
             />
           );
         })}

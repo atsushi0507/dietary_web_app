@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import CustomProgressBar from "@/components/atoms/customProgressBar";
+import RadarChart from "@/components/atoms/RadarChart";
 
 const TopReport = () => {
     return (
@@ -15,7 +16,7 @@ const TopReport = () => {
                                 あと{Math.round(2230.5 * 0.3 * 10) / 10} kcal
                             </Typography>
                             <CustomProgressBar
-                                value={90}
+                                value={80}
                                 maxValue={150}
                                 showGuidelines={true}
                                 guidelineValues={[90, 100, 110]}
@@ -38,9 +39,7 @@ const TopReport = () => {
                 </Grid>
                 <Grid size={5}>
                     <div style={{backgroundColor: "rgba(0, 255, 0, 0.3)", height: "300px"}}>
-                    <Typography variant="body1">
-                        右側
-                    </Typography>
+                        <RadarChart />
                     </div>
                 </Grid>
             </Grid>
