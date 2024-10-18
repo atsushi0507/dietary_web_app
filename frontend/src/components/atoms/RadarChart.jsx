@@ -20,26 +20,19 @@ const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, m
         radar: [
             {
                 indicator: indicators.map((indicator, index) => ({
-                    text: indicator,
+                    name: indicator,
                     max: maxValues ? maxValues[index] : 150, // maxValuesが指定されていない場合のデフォルト値
                 })),
                 center: ["50%", "55%"], // 中心位置を調整
                 radius: radius,  // 自動計算されたradiusを使用
                 startAngle: 90,
                 splitNumber: 5,
-                // shape: "circle",
+
                 axisName: {
                     formatter: "[{value}]",
                     color: "#428bd4",
                 },
-                // splitArea: {
-                //     areaStyle: {
-                //         color: new echarts.graphic.RadialGradient(0.5, 0.5, 1, [
-                //             { offset: 0, color: "rgba(30, 144, 255, 1.0)" },
-                //             { offset: 1, color: "rgba(245, 32, 0, 1.0)" },
-                //         ]),
-                //     },
-                // },
+
                 axisLine: {
                     lineStyle: {
                         color: "rgba(211, 253, 250, 0.8)",

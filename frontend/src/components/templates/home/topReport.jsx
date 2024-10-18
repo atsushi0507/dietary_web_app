@@ -9,8 +9,8 @@ const TopReport = () => {
     return (
         <TopContainer>
             <Grid container direction="row">
-                <Grid size={7}>
-                    <div style={{backgroundColor: "rgba(0, 0, 255, 0.3)", height: "300px"}}>
+                <Grid size={6}>
+                    <div style={{backgroundColor: "rgba(0, 0, 255, 0.3)", height: "180px"}}>
                         <ProgressBarArea>
                             <Typography variant="body1">
                                 あと{Math.round(2230.5 * 0.3 * 10) / 10} kcal
@@ -30,15 +30,10 @@ const TopReport = () => {
                                 最近の食事スコア: <strong>B</strong>
                             </Typography>
                         </ScoreArea>
-                        <FeedbackArea>
-                            <Typography variant="body1">
-                                脂質が多かったので、次の食事では低脂質な食事を心がけましょう。xxx などがおすすめです。
-                            </Typography>
-                        </FeedbackArea>
                     </div>
                 </Grid>
-                <Grid size={5}>
-                    <div style={{backgroundColor: "rgba(0, 255, 0, 0.3)", height: "300px"}}>
+                <Grid size={6}>
+                    <div style={{backgroundColor: "rgba(0, 255, 0, 0.3)", height: "180px"}}>
                     <RadarChart 
                         title="PFCバランス"
                         darkMode={false}
@@ -53,6 +48,15 @@ const TopReport = () => {
 
                     </div>
                 </Grid>
+                <div style={{height: "120px"}}>
+                        <FeedbackArea>
+                            <Typography variant="body1">
+                                脂質が多かったので、次の食事では低脂質な食事を心がけましょう。xxx などがおすすめです。
+                                必要なマテリアルは揃ったが、並べ方は工夫の余地あり。
+                                Progress bar and score area need more information.
+                            </Typography>
+                        </FeedbackArea>
+                    </div>
             </Grid>
         </TopContainer>
     );
@@ -66,7 +70,7 @@ const TopContainer = styled.div`
 `
 
 const ProgressBarArea = styled.div`
-    height: 80px;
+    height: 100px;
     padding: 10px;
     background-color: rgba(255, 0, 255, 0.3);
     display: flex;
@@ -74,13 +78,13 @@ const ProgressBarArea = styled.div`
 `
 
 const ScoreArea = styled.div`
-    height: 50px;
+    height: 80px;
     padding: 10px;
     background-color: rgba(144, 60, 80, 0.3);
 `
 
 const FeedbackArea = styled.div`
-    height: 170px;
+    height: 100px;
     padding: 10px;
     background-color: rgba(30, 30, 140, 0.3);
 `
