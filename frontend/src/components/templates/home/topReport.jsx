@@ -39,7 +39,18 @@ const TopReport = () => {
                 </Grid>
                 <Grid size={5}>
                     <div style={{backgroundColor: "rgba(0, 255, 0, 0.3)", height: "300px"}}>
-                        <RadarChart />
+                    <RadarChart 
+                        title="PFCバランス"
+                        darkMode={false}
+                        // indicators={["タンパク質", "脂質", "炭水化物"]}
+                        indicators={["P", "F", "C"]}
+                        seriesData={[
+                            { name: "", values: [50, 85.4, 90.5], color: "rgba(255, 188, 52, 0.6)" },
+                        ]}
+                        maxValues={[100, 100, 100]}
+                        chartHeight="180px"
+                    />
+
                     </div>
                 </Grid>
             </Grid>
