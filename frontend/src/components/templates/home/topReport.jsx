@@ -24,6 +24,15 @@ const TopReport = () => {
                                     {start: 90, end: 110, fillColor: "rgba(0, 255, 0, 0.8)"}
                                 ]}
                             />
+                            <Typography variant="body2">
+                                タンパク質: あと XXX g
+                            </Typography>
+                            <Typography variant="body2">
+                                脂質: あと YYY g
+                            </Typography>
+                            <Typography variant="body2">
+                                炭水化物: あと ZZZ g
+                            </Typography>
                         </ProgressBarArea>
                         <ScoreArea>
                             <Typography variant="body1">
@@ -70,7 +79,7 @@ const TopContainer = styled.div`
 `
 
 const ProgressBarArea = styled.div`
-    height: 100px;
+    height: 120px;
     padding: 10px;
     background-color: rgba(255, 0, 255, 0.3);
     display: flex;
@@ -78,13 +87,13 @@ const ProgressBarArea = styled.div`
 `
 
 const ScoreArea = styled.div`
-    height: 80px;
+    height: 60px;
     padding: 10px;
     background-color: rgba(144, 60, 80, 0.3);
 `
 
 const FeedbackArea = styled.div`
-    height: 100px;
+    height: 120px;
     padding: 10px;
     background-color: rgba(30, 30, 140, 0.3);
 `

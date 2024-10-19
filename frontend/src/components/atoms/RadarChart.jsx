@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as echarts from "echarts";
 
-const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, maxValues, chartHeight = "350px" }) => {
+const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, maxValues, chartHeight = "350px", unit = "%" }) => {
     const chartRef = useRef(null);
     const [radius, setRadius] = useState(120); // 初期値は120
     const [myChart, setMyChart] = useState(null); // チャートインスタンスを保存
@@ -29,7 +29,7 @@ const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, m
                 splitNumber: 5,
 
                 axisName: {
-                    formatter: "[{value}]",
+                    formatter: "{value}",
                     color: "#428bd4",
                 },
 
@@ -57,7 +57,7 @@ const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, m
                     label: {
                         show: true,
                         formatter: function (params) {
-                            return params.value.toFixed(1) + "%";
+                            return params.value.toFixed(1) + unit;
                         },
                     },
                 })),
@@ -70,11 +70,11 @@ const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, m
             if (chartRef.current) {
                 // 親要素の横幅を取得
                 const chartWidth = chartRef.current.clientWidth;
-                const margin = 15; // 左右のマージンを固定で10pxとする
+                const margin = 10; // 左右のマージンを固定で10pxとする
                 const availableWidth = chartWidth - margin * 2;
 
                 // レーダーチャートのradiusを(availableWidth / 2)で設定
-                const newRadius = availableWidth / 2;
+                const newRadius = availableWidth / 3;
                 setRadius(newRadius);
             }
         };

@@ -25,7 +25,7 @@ const Header = () => {
             <Nav>
                 <Link to="/home" external={false}>ホーム</Link>
                 <Link to="/record" external={false}>記録</Link>
-                <Link to="/dashboard" external={false}>評価・ダッシュボード</Link>
+                <Link to="/summary" external={false}>サマリー</Link>
             </Nav>
             {isLogin
             ? <Button onClick={clickLogoutButton}>ログアウト</Button>
