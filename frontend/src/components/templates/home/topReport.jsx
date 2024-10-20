@@ -43,6 +43,9 @@ const TopReport = () => {
                 </Grid>
                 <Grid size={6}>
                     <div style={{backgroundColor: "rgba(0, 255, 0, 0.3)", height: "180px"}}>
+                    <Typography variant="subtitle1" sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                        PFCバランス
+                    </Typography>
                     <RadarChart 
                         title="PFCバランス"
                         darkMode={false}

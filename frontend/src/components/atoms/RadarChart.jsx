@@ -11,8 +11,12 @@ const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, m
     const getOptions = (radius) => ({
         title: {
             text: title,
-            top: '10px',  // titleの位置を上に配置
+            top: 'top',  // titleの位置を上に配置
             left: 'center',  // 中央揃え
+            textStyle: {
+                fontSize: 14
+            },
+            show:false
         },
         legend: {
             top: 'bottom',
@@ -23,10 +27,11 @@ const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, m
                     name: indicator,
                     max: maxValues ? maxValues[index] : 150, // maxValuesが指定されていない場合のデフォルト値
                 })),
-                center: ["50%", "55%"], // 中心位置を調整
-                radius: radius,  // 自動計算されたradiusを使用
+                center: ["50%", "50%"], // 中心位置を調整
+                radius: "75%",  // 自動計算されたradiusを使用
                 startAngle: 90,
                 splitNumber: 5,
+                axisNameGap: 8,
 
                 axisName: {
                     formatter: "{value}",

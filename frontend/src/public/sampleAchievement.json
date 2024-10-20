@@ -1,0 +1,72 @@
+[
+    {
+        "date": "2024-05-01",
+        "calories": 86.7,
+        "protein": 118.1,
+        "fat": 100.5,
+        "carbs": 88.5
+    },
+    {
+        "date": "2024-05-02",
+        "calories": 89.1,
+        "protein": 85.9,
+        "fat": 102.2,
+        "carbs": 89.6
+    },
+    {
+        "date": "2024-05-03",
+        "calories": 116.6,
+        "protein": 97.6,
+        "fat": 98.8,
+        "carbs": 93.5
+    },
+    {
+        "date": "2024-05-04",
+        "calories": 109.4,
+        "protein": 103.5,
+        "fat": 104.9,
+        "carbs": 111.0
+    },
+    {
+        "date": "2024-05-05",
+        "calories": 91.0,
+        "protein": 88.8,
+        "fat": 107.6,
+        "carbs": 115.7
+    },
+    {
+        "date": "2024-05-06",
+        "calories": 89.7,
+        "protein": 92.0,
+        "fat": 102.0,
+        "carbs": 114.6
+    },
+    {
+        "date": "2024-05-07",
+        "calories": 90.8,
+        "protein": 86.7,
+        "fat": 100.8,
+        "carbs": 97.1
+    },
+    {
+        "date": "2024-05-08",
+        "calories": 110.3,
+        "protein": 88.7,
+        "fat": 118.7,
+        "carbs": 107.8
+    },
+    {
+        "date": "2024-05-09",
+        "calories": 82.5,
+        "protein": 85.5,
+        "fat": 116.5,
+        "carbs": 102.4
+    },
+    {
+        "date": "2024-05-10",
+        "calories": 102.6,
+        "protein": 82.9,
+        "fat": 85.9,
+        "carbs": 89.8
+    }
+]
