@@ -1,1 +1,2 @@
 config/dietary-web-app-*.json
+*__pycache__

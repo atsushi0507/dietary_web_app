@@ -1,7 +1,7 @@
-from config import client, DATASET_NAME
+from config.config import client, DATASET_NAME
 
 
-TABLE_NAME = "your_table_name"
+TABLE_NAME = "weight_record"
 
 def insert_weight_record(
         user_id: str,
