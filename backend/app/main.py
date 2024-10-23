@@ -12,7 +12,6 @@ def record_weight(request):
         weight_record = WeightRecord(**request_json)
 
         # データベースに挿入
-
         insert_weight_record(weight_record.user_id, weight_record.date, weight_record.weight)
 
         return json.dump({"message": "Weight recorded successfully"}), 200
