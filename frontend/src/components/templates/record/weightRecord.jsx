@@ -3,9 +3,13 @@ import NumberInput from "@/components/atoms/NumberInput";
 import { Alert } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-const WeightRecord = () => {
+const user_id = "test-user-123";
+
+const WeightRecord = ({ date }) => {
     const [weight, setWeight] = useState(48);
+    const [message, setMessage] = useState("");
 
     const saveToLocalStorage = (weightData) => {
         const storedData = localStorage.getItem("weightRecords");
@@ -27,6 +31,7 @@ const WeightRecord = () => {
         records[currentDate].push({
             weight: weightData.weight,
             timestamp: weightData.timestamp,
+            date: date,
             user_id: weightData.user_id,
         });
 
@@ -39,7 +44,7 @@ const WeightRecord = () => {
         if (!storedData) return;
 
         const records = JSON.parse(storedData);
-        const today = new Date().toISOString().split('T')[0]; // 今日の日付を取得
+        // const today = new Date().toISOString().split('T')[0]; // 今日の日付を取得
         const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]; // 昨日の日付を取得
 
         // 昨日の日付のデータを削除
@@ -54,15 +59,28 @@ const WeightRecord = () => {
         removePreviousDayData();
     }, []);
 
+    // firestore に保存する仕組み
+    const recordWeightToFS = async (weightData) => {
+        try {
+            const response = await axios.post(
+                "https://url.url",
+                weightData
+            );
+            setMessage(response.data.message);
+        } catch(error) {
+            setMessage("Error recording weight...: " + error.message);
+        }
+    };
+
     const handleButton = () => {
         const weightData = {
             weight: weight,
             timestamp: new Date().toISOString(), // タイムスタンプを付与
-            user_id: "test_user_123"
+            date: date,
+            user_id: user_id
         };
         saveToLocalStorage(weightData);
-
-        alert("登録しました");
+        recordWeightToFS(weightData);
     }
     return (
         <>
