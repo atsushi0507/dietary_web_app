@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 from google.cloud import bigquery
 from google.cloud import firestore
