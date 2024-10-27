@@ -1,5 +1,5 @@
 import json
-from db.weight_record import insert_weight_record, tmp_weight_save_to_firestore
+from db.weight_record import tmp_weight_save_to_firestore
 from models.weight import WeightRecord
 
 

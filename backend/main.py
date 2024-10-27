@@ -1,27 +1,46 @@
 from app.weight_record import tmp_weight_save_to_firestore
-
+import json
 
 def record_weight_to_fs(request):
-    # 体重記録用の関数を呼び出す
-    return tmp_weight_save_to_firestore(
-            request.user_id,
-            request.timestamp,
-            request.date,
-            request.weight
-        )
+    # Preflight リクエスト (CORS用のOPTIONSメソッド) への対応
+    if request.method == 'OPTIONS':
+        # Preflightリクエストに対応するためにヘッダーを設定
+        headers = {
+            'Access-Control-Allow-Origin': '*',  # 必要に応じて特定のオリジンに変更
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        return ('', 204, headers)
 
-# def record_weight_to_fs(request):
-#     try:
-#         request_json = request.get_json(silent=True)
-#         weight_record = WeightRecord(**request_json)
+    # POSTリクエストへの処理
+    if request.method == 'POST':
+        try:
+            # JSONリクエストからデータを取得
+            data = request.get_json()
 
-#         tmp_weight_save_to_firestore(
-#             weight_record.user_id,
-#             weight_record.timestamp,
-#             weight_record.date,
-#             weight_record.weight
-#         )
+            # 体重記録用の関数を呼び出す
+            tmp_weight_save_to_firestore(
+                data['user_id'],
+                data['timestamp'],
+                data['date'],
+                data['weight']
+            )
 
-#         return json.dump({"message": "Weight recorded to the firestore successfully"}), 200
-#     except Exception as e:
-#         return json.dump({"error": str(e)}), 500
+            # CORSヘッダーを含めたレスポンスを返す
+            headers = {
+                'Access-Control-Allow-Origin': '*'  # 必要に応じて特定のオリジンに変更
+            }
+            return (json.dumps({'message': 'Weight recorded successfully!'}), 200, headers)
+
+        except Exception as e:
+            headers = {
+                'Access-Control-Allow-Origin': '*'  # 必要に応じて特定のオリジンに変更
+            }
+            return (json.dumps({'error': f'Failed to record weight: {str(e)}'}), 500, headers)
+
+    # その他のHTTPメソッドには対応しない
+    headers = {
+        'Access-Control-Allow-Origin': '*'  # 必要に応じて特定のオリジンに変更
+    }
+    return (json.dumps({'error': 'Invalid request method'}), 405, headers)

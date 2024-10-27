@@ -19,7 +19,7 @@ const WeightRecord = ({ date }) => {
         if (storedData) {
             records = JSON.parse(storedData);
         } else {
-            record = {};
+            records = {};
         }
 
         // 今日の日付のレコードがない場合、空の配列を作成
@@ -62,8 +62,9 @@ const WeightRecord = ({ date }) => {
     // firestore に保存する仕組み
     const recordWeightToFS = async (weightData) => {
         try {
+            console.log(weightData);
             const response = await axios.post(
-                "https://url.url",
+                "https://asia-northeast1-dietary-web-app.cloudfunctions.net/record_weight_to_fs",
                 weightData
             );
             setMessage(response.data.message);
