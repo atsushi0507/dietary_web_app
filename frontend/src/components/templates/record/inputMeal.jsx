@@ -101,7 +101,7 @@ const InputMeal = ({setSelectedMeal}) => {
                 <Button
                     onClick={handleSelectedMeal}
                 >
-                    完了
+                    登録
                 </Button>
             </ButtonArray>
         </>
