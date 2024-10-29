@@ -15,9 +15,9 @@ const mealType = [
 const MealRecord = () => {
     const [selectedMeal, setSelectedMeal] = useState(null);
 
-    const handleClickButton = (newValue) => {
-        console.log(`${newValue}`);
-        setSelectedMeal(newValue);
+    const handleClickButton = (newMealType) => {
+        console.log(newMealType);
+        setSelectedMeal(newMealType);
     }
 
     return (
@@ -29,14 +29,14 @@ const MealRecord = () => {
                             <IconButton
                                 key={meal}
                                 text={meal}
-                                onClick={(meal) => handleClickButton(meal)}
+                                onClick={() => handleClickButton(meal)}
                             />
                         </div>
                     )
                 })}
             </ButtonArray>
             {selectedMeal === null && <MealRecordDisplay mealData={mealData} />}
-            {selectedMeal !== null && <InputMeal setSelectedMeal={setSelectedMeal}/>}
+            {selectedMeal !== null && <InputMeal selectedMeal={selectedMeal} setSelectedMeal={setSelectedMeal}/>}
         </>
     );
 };

@@ -5,6 +5,9 @@ import Button from "@/components/atoms/Button";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MenuEntry from "@/components/molecules/menuEntry";
+import WeightRecord from "./weightRecord";
+
+const user_id = "test-user-123";
 
 const sampleData = [
     {
@@ -40,7 +43,7 @@ const sampleSearchData = [
     }
 ]
 
-const InputMeal = ({setSelectedMeal}) => {
+const InputMeal = ({selectedMeal, setSelectedMeal}) => {
     const [strMenu, setStrMenu] = useState("");
     const [doSearch, setDoSearch] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState({"menu": "", "cal": null});
@@ -56,7 +59,40 @@ const InputMeal = ({setSelectedMeal}) => {
     const handleSelectedMeal = () => {
         setSelectedMeal(null);
         setDoSearch(false);
+
+        const menuData = {
+            "user_id": user_id,
+            "meal_type": selectedMeal,
+
+        };
+        console.log(menuData);
     }
+
+    const saveToLocalStorage = (mealData) => {
+        const storedData = localStorage.getItem("mealRecords");
+        const currentDate = new Date().toISOString().split("T")[0];
+        let records = {};
+
+        if (storedData) {
+            records = JSON.parse(storedData);
+        } else {
+            records = {};
+        }
+
+        if (!record[currentDate]) {
+            records[currentDate] = [];
+        }
+
+        // 新しい食事データを配列に追加
+        records[currentDate].push({
+            user_id: mealData.user_id,
+            date: date,
+            mealType: mealData.mealType,
+            menus: mealData.menus
+        });
+
+        localStorage.setItem("mealRecords", JSON.stringify(records));
+    };
 
     const handleSelectedMenu = (data) => {
         sampleData.push({
