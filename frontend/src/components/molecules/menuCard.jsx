@@ -1,15 +1,21 @@
 import { Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NumberInput from "../atoms/NumberInput";
 
-const MenuCard = ({ menuData }) => {
+const MenuCard = ({ menuData, onVolumeChange }) => {
     const { menu, cal } = menuData;
     const [volume, setVolume] = useState(1.0);
 
     const handleVolume = (e) => {
-        setVolume(e.target.value);
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
     }
+
+    // Volumeが変更されたら親コンポーネントに通知
+    useEffect(() => {
+        onVolumeChange(menu, volume);
+    }, [menu, volume]);
 
     return (
         <Card>

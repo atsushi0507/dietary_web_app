@@ -40,7 +40,7 @@ const RecordTop = () => {
                     value={selectedTab}
                     onChange={handleSelectedTab}
                 />
-                {selectedTab === 0 && <MealRecord />}
+                {selectedTab === 0 && <MealRecord date={date}/>}
                 {selectedTab === 1 && <WeightRecord date={date}/>}
             </Grid>
         </Grid>

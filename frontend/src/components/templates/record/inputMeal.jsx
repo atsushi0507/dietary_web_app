@@ -43,10 +43,18 @@ const sampleSearchData = [
     }
 ]
 
-const InputMeal = ({selectedMeal, setSelectedMeal}) => {
+const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
     const [strMenu, setStrMenu] = useState("");
     const [doSearch, setDoSearch] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState({"menu": "", "cal": null});
+    const [menuSelections, setMenuSelections] = useState({});
+
+    const handleMenuChange = (menu, volume) => {
+        setMenuSelections(prevState => ({
+            ...prevState,
+            [menu]: volume
+        }));
+    };
 
     const handleSearch = (e) => {
         setStrMenu(e.target.value);
@@ -60,12 +68,12 @@ const InputMeal = ({selectedMeal, setSelectedMeal}) => {
         setSelectedMeal(null);
         setDoSearch(false);
 
-        const menuData = {
+        const tmpData = {
             "user_id": user_id,
             "meal_type": selectedMeal,
-
+            "menus": menuSelections
         };
-        console.log(menuData);
+        saveToLocalStorage(tmpData);
     }
 
     const saveToLocalStorage = (mealData) => {
@@ -79,7 +87,7 @@ const InputMeal = ({selectedMeal, setSelectedMeal}) => {
             records = {};
         }
 
-        if (!record[currentDate]) {
+        if (!records[currentDate]) {
             records[currentDate] = [];
         }
 
@@ -87,7 +95,7 @@ const InputMeal = ({selectedMeal, setSelectedMeal}) => {
         records[currentDate].push({
             user_id: mealData.user_id,
             date: date,
-            mealType: mealData.mealType,
+            meal_type: mealData.meal_type,
             menus: mealData.menus
         });
 
@@ -116,6 +124,7 @@ const InputMeal = ({selectedMeal, setSelectedMeal}) => {
                     <MenuCard
                         key={data.menu}
                         menuData={data}
+                        onVolumeChange={handleMenuChange}
                     />
                 );
             })}
