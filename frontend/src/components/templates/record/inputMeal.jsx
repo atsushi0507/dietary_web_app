@@ -76,6 +76,23 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
         saveToLocalStorage(tmpData);
     }
 
+    const removePreviousDayData = () => {
+        const storedData = localStorage.getItem("mealRecords");
+        if (!storedData) return;
+
+        const records = JSON.parse(storedData);
+        const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+
+        if (records[yesterday]) {
+            delete records[yesterday];
+            localStorage.setItem("mealRecords", JSON.stringify(records));
+        }
+    };
+
+    useEffect(() => {
+        removePreviousDayData();
+    }, []);
+
     const saveToLocalStorage = (mealData) => {
         const storedData = localStorage.getItem("mealRecords");
         const currentDate = new Date().toISOString().split("T")[0];
