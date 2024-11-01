@@ -81,12 +81,19 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
         if (!storedData) return;
 
         const records = JSON.parse(storedData);
-        const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+        const today = new Date();
 
-        if (records[yesterday]) {
-            delete records[yesterday];
-            localStorage.setItem("mealRecords", JSON.stringify(records));
-        }
+        // 3日以上前の日付を削除
+        Object.keys(records).forEach(recordDate => {
+            const recordDateObj = new Date(recordDate);
+            const diffInDays = (today - recordDateObj) / (1000 * 60 * 60 * 24);
+            
+            if (diffInDays >= 1) {
+                delete records[recordDate];
+            }
+        });
+
+        localStorage.setItem("mealRecords", JSON.stringify(records));
     };
 
     useEffect(() => {
