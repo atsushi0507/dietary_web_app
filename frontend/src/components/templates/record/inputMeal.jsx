@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MenuEntry from "@/components/molecules/menuEntry";
 import WeightRecord from "./weightRecord";
+import local from "next/font/local";
 
 const user_id = "test-user-123";
 
@@ -74,24 +75,20 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
             "menus": menuSelections
         };
         saveToLocalStorage(tmpData);
+        saveTodaysRecord(tmpData);
     }
 
     const removePreviousDayData = () => {
-        const storedData = localStorage.getItem("mealRecords");
+        const storedData = localStorage.getItem("todaysMealRecord");
         if (!storedData) return;
 
         const records = JSON.parse(storedData);
-        const today = new Date();
+        const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
 
-        // 3日以上前の日付を削除
-        Object.keys(records).forEach(recordDate => {
-            const recordDateObj = new Date(recordDate);
-            const diffInDays = (today - recordDateObj) / (1000 * 60 * 60 * 24);
-            
-            if (diffInDays >= 1) {
-                delete records[recordDate];
-            }
-        });
+        if (records[yesterday]) {
+            delete records[yesterday];
+            localStorage.setItem("todaysMealRecord", JSON.stringify(records))
+        }
 
         localStorage.setItem("mealRecords", JSON.stringify(records));
     };
@@ -126,11 +123,36 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
         localStorage.setItem("mealRecords", JSON.stringify(records));
     };
 
+    const saveTodaysRecord = (mealData) => {
+        const storedData = localStorage.getItem("todaysMealRecord");
+        const today = new Date().toISOString().split("T")[0];
+        let records = {};
+
+        if (storedData) {
+            records = JSON.parse(storedData);
+        } else {
+            records = {};
+        }
+
+        if (!records[today]) {
+            records[today] = [];
+        }
+
+        records[today].push({
+            date: date,
+            meal_type: mealData.meal_type,
+            menus: mealData.menus
+        });
+
+        localStorage.setItem("todaysMealRecord", JSON.stringify(records));
+    }
+
     const handleSelectedMenu = (data) => {
         sampleData.push({
             "menu": data.menu,
             "cal": data.cal
         });
+
         setSelectedMenu(data.menu);
         setDoSearch(false);
     }
