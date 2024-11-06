@@ -20,7 +20,20 @@ const MenuList = ({ mealData }) => {
                     </Typography>
                     
                     {/* 食事データが存在するか確認 */}
-                    {mealData.mealRecords[mealType] ? (
+                    {mealData.length > 0 ? (
+                        mealData.map((item, index) => (
+                            <MenuContainer key={index}>
+                                <Typography variant="body1">
+                                    {item.menus.key}
+                                </Typography>
+                            </MenuContainer>
+                        ))
+                    ) : (
+                        <Typography variant="body1" color="textSecondary">
+                            記録なし
+                        </Typography>
+                    )}
+                    {/* {mealData.mealRecords[mealType] ? (
                         mealData.mealRecords[mealType].map((item, index) => (
                             <MenuContainer key={index}>
                                 <Typography variant="body1">
@@ -36,7 +49,7 @@ const MenuList = ({ mealData }) => {
                         <Typography variant="body1" color="textSecondary">
                             記録なし
                         </Typography>
-                    )}
+                    )} */}
                 </div>
             ))}
         </Container>

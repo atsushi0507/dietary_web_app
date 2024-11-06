@@ -5,7 +5,7 @@ const useCalcNutrition = () => {
     const [nutritionData, setNutritionData] = useState(null);
 
     useEffect(() => {
-        const mealRecords = JSON.parse(localStorage.getItem("mealRecords"));
+        const mealRecords = JSON.parse(localStorage.getItem("todaysMealRecord"));
         console.log("In custom hook", mealRecords);
         if (!mealRecords || !mealRecords.menus){ console.log("Null!"); return};
 
