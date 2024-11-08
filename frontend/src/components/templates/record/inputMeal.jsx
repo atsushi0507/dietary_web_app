@@ -138,13 +138,40 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
             records[today] = [];
         }
 
-        records[today].push({
-            date: date,
-            meal_type: mealData.meal_type,
-            menus: mealData.menus
-        });
+        const todaysMeals = records[today];
 
+        // 同じ食事タイプがあるか確認
+        const existingMealIndex = todaysMeals.findIndex(
+            (meal) => meal.meal_type === mealData.meal_type
+        );
+
+        if (existingMealIndex >= 0) {
+            // 同じ食事タイプが存在する場合はメニューを追加
+            const existingMeal = todaysMeals[existingMealIndex];
+            existingMeal.menus = {
+                ...existingMeal.menus,
+                ...mealData.menus // 新しいメニューを追加
+            };
+        } else {
+            // 同じ食事タイプが存在しない場合は新しい食事データを追加
+            todaysMeals.push({
+                date: date,
+                meal_type: mealData.meal_type,
+                menus: mealData.menus
+            });
+        }
+
+        // 更新したデータをlocalStorageに保存
+        records[today] = todaysMeals;
         localStorage.setItem("todaysMealRecord", JSON.stringify(records));
+
+        // records[today].push({
+        //     date: date,
+        //     meal_type: mealData.meal_type,
+        //     menus: mealData.menus
+        // });
+
+        // localStorage.setItem("todaysMealRecord", JSON.stringify(records));
     }
 
     const handleSelectedMenu = (data) => {

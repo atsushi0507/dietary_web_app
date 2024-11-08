@@ -53,7 +53,7 @@ import sampleDB from "@/public/sampleDB.json";
 const useCalcNutrition = () => {
     const [nutritionData, setNutritionData] = useState([]); // 初期値は空の配列
 
-    const today = new Date(2024, 10, 8).toISOString().split("T")[0]; // For the development of this function, to be deleted after development.
+    const today = new Date(2024, 10, 9).toISOString().split("T")[0]; // For the development of this function, to be deleted after development.
 
     // ローカルストレージからデータを取得し、栄養データを計算する関数
     const calculateNutrition = () => {
