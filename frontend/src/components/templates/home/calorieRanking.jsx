@@ -3,9 +3,12 @@ import styled from "styled-components";
 import { Typography } from "@mui/material";
 
 const CalorieRanking = ({ mealData }) => {
-    const allMeals = Object.entries(mealData.mealRecords).flatMap(([mealType, items]) =>
-     items ? items.map(item => ({ ...item, type: mealType })) : []
+    // 各mealDataからnutritionデータを抽出しフラット化
+    const allMeals = mealData.flatMap(({ meal_type, nutrition }) =>
+        nutrition.map(({ menu, calories }) => ({ menu, calories, meal_type }))
     );
+
+    // カロリーの高い順に並び替え
     const sortedMeals = allMeals.sort((a, b) => b.calories - a.calories).slice(0, 10);
 
     return (
@@ -14,9 +17,9 @@ const CalorieRanking = ({ mealData }) => {
                 sortedMeals.map((item, index) => (
                     <MealContainer key={index}>
                         <Typography variant="subtitle1">
-                            {`${index+1}. ${item.name}:`}
+                            {`${index + 1}. ${item.menu} (${item.meal_type}):`}
                         </Typography>
-                        <Typography variant="body1" sx={{marginLeft: "8px"}}>
+                        <Typography variant="body1" sx={{ marginLeft: "8px" }}>
                             {`${item.calories} kcal`}
                         </Typography>
                     </MealContainer>
@@ -34,4 +37,4 @@ export default CalorieRanking;
 
 const MealContainer = styled.div`
     display: flex;
-`
+`;

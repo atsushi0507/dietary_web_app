@@ -164,14 +164,6 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
         // 更新したデータをlocalStorageに保存
         records[today] = todaysMeals;
         localStorage.setItem("todaysMealRecord", JSON.stringify(records));
-
-        // records[today].push({
-        //     date: date,
-        //     meal_type: mealData.meal_type,
-        //     menus: mealData.menus
-        // });
-
-        // localStorage.setItem("todaysMealRecord", JSON.stringify(records));
     }
 
     const handleSelectedMenu = (data) => {

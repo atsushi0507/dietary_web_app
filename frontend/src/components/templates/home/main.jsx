@@ -40,9 +40,9 @@ const Main = () => {
                     value={selectedTab}
                     onChange={handleSelectedTab}
                 />
-                {/* {selectedTab === 0 && <MenuList mealData={sampleData}/>} */}
                 {selectedTab === 0 && <MenuList mealData={sampleFromLS} />}
-                {selectedTab === 1 && <CalorieRanking mealData={sampleData} />}
+                {/* {selectedTab === 1 && <CalorieRanking mealData={sampleData} />} */}
+                {selectedTab === 1 && <CalorieRanking mealData={sampleFromLS} />}
                 {selectedTab === 2 && <BalanceRanking mealData={sampleData} />}
             </Grid>
         </Grid>
