@@ -5,7 +5,16 @@ import Grid from "@mui/material/Grid2";
 import CustomProgressBar from "@/components/atoms/customProgressBar";
 import RadarChart from "@/components/atoms/RadarChart";
 
-const TopReport = () => {
+const TopReport = ({mealData, person}) => {
+    const allMeals = mealData.flatMap(({meal_type, nutrition}) => 
+        nutrition.map(({menu, calories, protein, fat, carb}) => ({menu, calories, protein, fat, carb, meal_type}))
+    );
+
+    const totalCalories = allMeals.reduce((total, meal) => total + parseFloat(meal.calories || 0), 0);
+    const totalProtein = allMeals.reduce((total, meal) => total + parseFloat(meal.protein || 0), 0);
+    const totalFat = allMeals.reduce((total, meal) => total + parseFloat(meal.fat || 0), 0);
+    const totalCarb = allMeals.reduce((total, meal) => total + parseFloat(meal.carb || 0), 0);
+
     return (
         <TopContainer>
             <Grid container direction="row">
@@ -13,7 +22,7 @@ const TopReport = () => {
                     <div style={{backgroundColor: "rgba(0, 0, 255, 0.3)", height: "180px"}}>
                         <ProgressBarArea>
                             <Typography variant="body1">
-                                あと{Math.round(2230.5 * 0.3 * 10) / 10} kcal
+                                あと{Math.round((person.cal - totalCalories) * 10) / 10} kcal
                             </Typography>
                             <CustomProgressBar
                                 value={80}
@@ -25,13 +34,13 @@ const TopReport = () => {
                                 ]}
                             />
                             <Typography variant="body2">
-                                タンパク質: あと XXX g
+                                タンパク質: あと {Math.round((person.P - totalProtein) * 10) / 10} g
                             </Typography>
                             <Typography variant="body2">
-                                脂質: あと YYY g
+                                脂質: あと {Math.round(((person.F - totalFat) * 10) / 10)} g
                             </Typography>
                             <Typography variant="body2">
-                                炭水化物: あと ZZZ g
+                                炭水化物: あと {Math.round((person.C - totalCarb) * 10) / 10} g
                             </Typography>
                         </ProgressBarArea>
                         <ScoreArea>

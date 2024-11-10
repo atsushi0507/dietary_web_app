@@ -19,11 +19,17 @@ const tabOptions = [
     { icon: <BalanceIcon />, label: "バランス" }
 ];
 
+const samplePerson = {
+    "cal": 2230.4,
+    "P": 88.0,
+    "F": 65.2,
+    "C": 352.1
+}
+
 const Main = () => {
     const [selectedTab, setSelectedTab] = useState(0);
 
     const sampleFromLS = useCalcNutrition();
-    console.log("Menu List: ", sampleFromLS);
 
     const handleSelectedTab = (e, newValue) => {
         setSelectedTab(newValue);
@@ -32,7 +38,7 @@ const Main = () => {
     return (
         <Grid container direction="column">
             <Grid size={12}>
-                <TopReport />
+                <TopReport mealData={sampleFromLS} person={samplePerson}/>
             </Grid>
             <Grid size={12}>
                 <BasicTab
@@ -41,9 +47,8 @@ const Main = () => {
                     onChange={handleSelectedTab}
                 />
                 {selectedTab === 0 && <MenuList mealData={sampleFromLS} />}
-                {/* {selectedTab === 1 && <CalorieRanking mealData={sampleData} />} */}
                 {selectedTab === 1 && <CalorieRanking mealData={sampleFromLS} />}
-                {selectedTab === 2 && <BalanceRanking mealData={sampleData} />}
+                {selectedTab === 2 && <BalanceRanking mealData={sampleFromLS} person={samplePerson}/>}
             </Grid>
         </Grid>
     );
