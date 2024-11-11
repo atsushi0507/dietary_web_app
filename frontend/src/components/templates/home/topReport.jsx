@@ -15,6 +15,10 @@ const TopReport = ({mealData, person}) => {
     const totalFat = allMeals.reduce((total, meal) => total + parseFloat(meal.fat || 0), 0);
     const totalCarb = allMeals.reduce((total, meal) => total + parseFloat(meal.carb || 0), 0);
 
+    const proteinScore = totalProtein / person.P * 100;
+    const fatScore = totalFat / person.F * 100;
+    const carbScore = totalCarb / person.C * 100;
+
     return (
         <TopContainer>
             <Grid container direction="row">
@@ -61,7 +65,7 @@ const TopReport = ({mealData, person}) => {
                         // indicators={["タンパク質", "脂質", "炭水化物"]}
                         indicators={["P", "F", "C"]}
                         seriesData={[
-                            { name: "", values: [50, 85.4, 90.5], color: "rgba(255, 188, 52, 0.6)" },
+                            { name: "", values: [proteinScore, fatScore, carbScore], color: "rgba(255, 188, 52, 0.6)" },
                         ]}
                         maxValues={[100, 100, 100]}
                         chartHeight="180px"

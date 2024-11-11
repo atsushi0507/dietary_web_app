@@ -10,16 +10,7 @@ import local from "next/font/local";
 
 const user_id = "test-user-123";
 
-const sampleData = [
-    {
-        "menu": "カレーライス",
-        "cal": 720
-    },
-    {
-        "menu": "コーンサラダ",
-        "cal": 140
-    }
-];
+const sampleData = [];
 
 const sampleSearchData = [
     {
@@ -80,17 +71,17 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
 
     const removePreviousDayData = () => {
         const storedData = localStorage.getItem("todaysMealRecord");
+        const today = new Date().toISOString().split("T")[0];
         if (!storedData) return;
 
-        const records = JSON.parse(storedData);
-        const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+        const todaysMeal = JSON.parse(storedData);
+        if (todaysMeal.date !== today) {
+            const mealRecords = JSON.parse(localStorage.getItem("mealRecord")) || {};
+            mealRecords[todaysMeal.date] = todaysMeal.meals;
 
-        if (records[yesterday]) {
-            delete records[yesterday];
-            localStorage.setItem("todaysMealRecord", JSON.stringify(records))
+            localStorage.setItem("mealRecords", JSON.stringifiy(mealRecords));
+            localStorage.setItem("todaysMealRecord", JSON.stringify({ date: today, menus: [] }));
         }
-
-        localStorage.setItem("mealRecords", JSON.stringify(records));
     };
 
     useEffect(() => {
@@ -126,34 +117,19 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
     const saveTodaysRecord = (mealData) => {
         const storedData = localStorage.getItem("todaysMealRecord");
         const today = new Date().toISOString().split("T")[0];
-        let records = {};
+        const todaysMeals = storedData ? JSON.parse(storedData).meals : [];
 
-        if (storedData) {
-            records = JSON.parse(storedData);
-        } else {
-            records = {};
-        }
-
-        if (!records[today]) {
-            records[today] = [];
-        }
-
-        const todaysMeals = records[today];
-
-        // 同じ食事タイプがあるか確認
         const existingMealIndex = todaysMeals.findIndex(
             (meal) => meal.meal_type === mealData.meal_type
         );
 
         if (existingMealIndex >= 0) {
-            // 同じ食事タイプが存在する場合はメニューを追加
             const existingMeal = todaysMeals[existingMealIndex];
             existingMeal.menus = {
                 ...existingMeal.menus,
-                ...mealData.menus // 新しいメニューを追加
+                ...mealData.menus
             };
         } else {
-            // 同じ食事タイプが存在しない場合は新しい食事データを追加
             todaysMeals.push({
                 date: date,
                 meal_type: mealData.meal_type,
@@ -161,9 +137,7 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
             });
         }
 
-        // 更新したデータをlocalStorageに保存
-        records[today] = todaysMeals;
-        localStorage.setItem("todaysMealRecord", JSON.stringify(records));
+        localStorage.setItem("todaysMealRecord", JSON.stringify({ date: today, meals: todaysMeals }));
     }
 
     const handleSelectedMenu = (data) => {
