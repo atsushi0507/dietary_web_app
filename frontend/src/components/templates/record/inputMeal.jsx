@@ -86,7 +86,7 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
 
     useEffect(() => {
         removePreviousDayData();
-    }, []);
+    }, [today]);
 
     const saveToLocalStorage = (mealData) => {
         const storedData = localStorage.getItem("mealRecords");
