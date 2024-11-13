@@ -11,7 +11,7 @@ import CalorieRanking from "./calorieRanking";
 import BalanceRanking from "./balanceRanking";
 import styled from "styled-components";
 import TopReport from "./topReport";
-import useCalcNutrition from "@/hooks/useMealData";
+import useCalcTodaysNutrition from "@/hooks/useMealData";
 
 const tabOptions = [
     { icon: <RestaurantIcon />, label: "食事" },
@@ -29,7 +29,7 @@ const samplePerson = {
 const Main = () => {
     const [selectedTab, setSelectedTab] = useState(0);
 
-    const sampleFromLS = useCalcNutrition();
+    const sampleFromLS = useCalcTodaysNutrition();
 
     const handleSelectedTab = (e, newValue) => {
         setSelectedTab(newValue);

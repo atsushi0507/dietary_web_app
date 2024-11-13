@@ -3,15 +3,16 @@
 import React, { useEffect, useState } from "react";
 import sampleDB from "@/public/sampleDB.json";
 
-const useCalcNutrition = () => {
+const useCalcTodaysNutrition = () => {
     const [nutritionData, setNutritionData] = useState([]); // 初期値は空の配列
 
-    const today = new Date(2024, 10, 12).toISOString().split("T")[0]; // For the development of this function, to be deleted after development.
+    // const today = new Date(2024, 10, 12).toISOString().split("T")[0]; // For the development of this function, to be deleted after development.
+    const today = new Date().toISOString().split("T")[0];
 
     // ローカルストレージからデータを取得し、栄養データを計算する関数
     const calculateNutrition = () => {
         if (typeof window !== "undefined") {
-            const storedData = JSON.parse(localStorage.getItem("todaysMealRecord"));
+            const storedData = JSON.parse(localStorage.getItem("mealRecord"));
             if (!storedData || !storedData.meals) { 
                 console.log("Null!");
                 return []; // データがない場合は空の配列を返す
@@ -52,4 +53,4 @@ const useCalcNutrition = () => {
     return nutritionData;
 };
 
-export default useCalcNutrition;
+export default useCalcTodaysNutrition;
