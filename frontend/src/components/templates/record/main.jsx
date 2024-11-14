@@ -15,8 +15,6 @@ const tabOptions = [
 const RecordTop = () => {
     const [date, setDate] = useState(dayjs());
     const [selectedTab, setSelectedTab] = useState(0);
-    console.log(date);
-    console.log(selectedTab);
 
     const handleDateChange = (newDate) => {
         setDate(newDate)

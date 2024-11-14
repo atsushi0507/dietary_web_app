@@ -48,7 +48,7 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
         setStrMenu(e.target.value);
     }
     const onClickSearchButton = () => {
-        alert(`${strMenu}を検索します`)
+        // alert(`${strMenu}を検索します`)
         setDoSearch(true);
     }
 
@@ -85,29 +85,14 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
     // }, [today]);
 
     const saveMealRecord = (mealData) => {
-        const storedData = localStorage.getItem("mealRecord");
-        const today = new Date().toISOString().split("T")[0];
-        const todaysMeals = storedData ? JSON.parse(storedData).meals : [];
+        const mealRecords = JSON.parse(localStorage.getItem("mealRecord")) || {};
 
-        const existingMealIndex = todaysMeals.findIndex(
-            (meal) => meal.meal_type === mealData.meal_type
-        );
+        if (!mealRecords[mealData.date]) mealRecords[mealData.date] = {};
+        if (!mealRecords[mealData.date][mealData.meal_type]) mealRecords[mealData.date][mealData.meal_type] = {};
 
-        if (existingMealIndex >= 0) {
-            const existingMeal = todaysMeals[existingMealIndex];
-            existingMeal.menus = {
-                ...existingMeal.menus,
-                ...mealData.menus
-            };
-        } else {
-            todaysMeals.push({
-                date: date,
-                meal_type: mealData.meal_type,
-                menus: mealData.menus
-            });
-        }
-
-        localStorage.setItem("mealRecord", JSON.stringify({ date: today, meals: todaysMeals }));
+        console.log(mealData);
+        mealRecords[mealData.date][mealData.meal_type][mealData.menus] = mealData.volume;
+        localStorage.setItem("mealRecord", JSON.stringify(mealRecords));
     }
 
     const handleSelectedMenu = (data) => {
