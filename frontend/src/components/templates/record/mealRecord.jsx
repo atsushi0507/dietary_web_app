@@ -12,11 +12,10 @@ const mealType = [
     "間食"
 ];
 
-const MealRecord = () => {
+const MealRecord = ({date}) => {
     const [selectedMeal, setSelectedMeal] = useState(null);
 
     const handleClickButton = (newMealType) => {
-        console.log(newMealType);
         setSelectedMeal(newMealType);
     }
 
@@ -36,7 +35,7 @@ const MealRecord = () => {
                 })}
             </ButtonArray>
             {selectedMeal === null && <MealRecordDisplay mealData={mealData} />}
-            {selectedMeal !== null && <InputMeal selectedMeal={selectedMeal} setSelectedMeal={setSelectedMeal}/>}
+            {selectedMeal !== null && <InputMeal selectedMeal={selectedMeal} setSelectedMeal={setSelectedMeal} date={date}/>}
         </>
     );
 };

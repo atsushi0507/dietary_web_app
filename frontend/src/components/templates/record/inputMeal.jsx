@@ -90,8 +90,9 @@ const InputMeal = ({date, selectedMeal, setSelectedMeal}) => {
         if (!mealRecords[mealData.date]) mealRecords[mealData.date] = {};
         if (!mealRecords[mealData.date][mealData.meal_type]) mealRecords[mealData.date][mealData.meal_type] = {};
 
-        console.log(mealData);
-        mealRecords[mealData.date][mealData.meal_type][mealData.menus] = mealData.volume;
+        for (const [menu, volume] of Object.entries(mealData.menus)) {
+            mealRecords[mealData.date][mealData.meal_type][menu] = volume;
+        }
         localStorage.setItem("mealRecord", JSON.stringify(mealRecords));
     }
 

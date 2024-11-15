@@ -16,8 +16,18 @@ const RecordTop = () => {
     const [date, setDate] = useState(dayjs());
     const [selectedTab, setSelectedTab] = useState(0);
 
+    const convertToDate =(dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        
+        const dateStr =  `${year}-${month}-${day}`;
+        return new Date(dateStr).toISOString().split("T")[0];
+    };
+
     const handleDateChange = (newDate) => {
-        setDate(newDate)
+        setDate(newDate);
     };
 
     const handleSelectedTab = (e, newValue) => {
@@ -38,8 +48,8 @@ const RecordTop = () => {
                     value={selectedTab}
                     onChange={handleSelectedTab}
                 />
-                {selectedTab === 0 && <MealRecord date={date}/>}
-                {selectedTab === 1 && <WeightRecord date={date}/>}
+                {selectedTab === 0 && <MealRecord date={convertToDate(date)}/>}
+                {selectedTab === 1 && <WeightRecord date={convertToDate(date)}/>}
             </Grid>
         </Grid>
     );

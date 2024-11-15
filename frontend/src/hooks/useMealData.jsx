@@ -1,51 +1,47 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import sampleDB from "@/public/sampleDB.json";
 
 const useCalcTodaysNutrition = () => {
-    const [nutritionData, setNutritionData] = useState([]); // 初期値は空の配列
+    const [nutritionData, setNutritionData] = useState([]);
 
-    // const today = new Date(2024, 10, 12).toISOString().split("T")[0]; // For the development of this function, to be deleted after development.
     const today = new Date().toISOString().split("T")[0];
 
-    // ローカルストレージからデータを取得し、栄養データを計算する関数
     const calculateNutrition = () => {
         if (typeof window !== "undefined") {
             const storedData = JSON.parse(localStorage.getItem("mealRecord"));
-            if (!storedData || !storedData.meals) { 
-                console.log("Null!");
-                return []; // データがない場合は空の配列を返す
+            if (!storedData || !storedData[today]) { 
+                console.log("No data for today!");
+                return [];
             }
 
-            // const mealRecords = storedData[today];
-            const mealRecords = storedData.meals;
-            
-            return mealRecords.map((record) => {
-                const mealDetails = record.menus;
-                const nutritionSummary = Object.entries(mealDetails).map(([menuName, volume]) => {
+            const mealRecords = storedData[today];
+
+            const nutritionResults = Object.entries(mealRecords).map(([mealType, menus]) => {
+                const nutritionSummary = Object.entries(menus).map(([menuName, volume]) => {
                     const itemData = sampleDB.find(item => item.menu === menuName);
-                    if (!itemData) return null;
+                    if (!itemData) return null; // メニューが見つからない場合はスキップ
 
                     return {
                         menu: menuName,
                         calories: (itemData.cal * volume * (itemData.volume / 100)).toFixed(1),
                         protein: (itemData.protein * volume * (itemData.volume / 100)).toFixed(1),
                         fat: (itemData.fat * volume * (itemData.volume / 100)).toFixed(1),
-                        carb: (itemData.carb * volume * (itemData.volume / 100)).toFixed(1)
+                        carb: (itemData.carb * volume * (itemData.volume / 100)).toFixed(1),
                     };
-                }).filter(item => item !== null);
-                
+                }).filter(item => item !== null); // null のエントリを除外
+
                 return {
-                    meal_type: record.meal_type,
+                    meal_type: mealType,
                     nutrition: nutritionSummary
                 };
             });
+
+            return nutritionResults;
         }
-        return []; // サーバーサイドの場合は空の配列を返す
+        return [];
     };
 
-    // 初回レンダリング時に calculateNutrition を実行し、データを設定
     useEffect(() => {
         setNutritionData(calculateNutrition());
     }, []); // 初回レンダリング時のみ実行
