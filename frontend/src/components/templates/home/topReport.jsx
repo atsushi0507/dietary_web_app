@@ -15,6 +15,7 @@ const TopReport = ({mealData, person}) => {
     const totalFat = allMeals.reduce((total, meal) => total + parseFloat(meal.fat || 0), 0);
     const totalCarb = allMeals.reduce((total, meal) => total + parseFloat(meal.carb || 0), 0);
 
+    const calScore = totalCalories / person.cal * 100;
     const proteinScore = totalProtein / person.P * 100;
     const fatScore = totalFat / person.F * 100;
     const carbScore = totalCarb / person.C * 100;
@@ -29,7 +30,7 @@ const TopReport = ({mealData, person}) => {
                                 あと{Math.round((person.cal - totalCalories) * 10) / 10} kcal
                             </Typography>
                             <CustomProgressBar
-                                value={80}
+                                value={calScore}
                                 maxValue={150}
                                 showGuidelines={true}
                                 guidelineValues={[90, 100, 110]}
