@@ -6,6 +6,7 @@ import TextInput from "@/components/atoms/TextInput";
 import Button from "@/components/atoms/Button";
 import Text from "@/components/atoms/Text";
 import Link from "@/components/atoms/Link";
+import { Typography } from "@mui/material";
 
 const Main = ({ onRegisterClick, onResetClick }) => {
     const [email, setEmail] = useState("");
@@ -18,9 +19,9 @@ const Main = ({ onRegisterClick, onResetClick }) => {
 
     return (
         <>
-            <Title level={2}>
+            <Typography variant="h4">
                 ログイン
-            </Title>
+            </Typography>
             <LoginForm>
                 <TextInput
                     placeholder="メールアドレス"
@@ -45,12 +46,12 @@ const Main = ({ onRegisterClick, onResetClick }) => {
             <Button onClick={onResetClick}>
                 パスワードを忘れましたか？
             </Button>
-            <Title level={2}>
+            <Typography variant="h6">
                 ユーザー登録
-            </Title>
-            <Text textAlign="center">
+            </Typography>
+            <Typography sx={{textAlign: "center"}}>
                 n ステップで簡単登録
-            </Text>
+            </Typography>
             <Button onClick={onRegisterClick}>
                 ユーザー登録へ
             </Button>

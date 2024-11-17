@@ -1,6 +1,7 @@
 import Button from "@/components/atoms/Button";
 import TextInput from "@/components/atoms/TextInput";
 import Title from "@/components/atoms/Title";
+import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -12,9 +13,9 @@ const PasswordResetRequest = ({ onBackClick }) => {
     }
     return (
         <>
-            <Title level={2}>
+            <Typography variant="h6">
                 パスワードをリセットする
-            </Title>
+            </Typography>
             <InputForm>
                 <TextInput
                     type="email"

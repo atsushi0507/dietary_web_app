@@ -7,6 +7,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import usePasswordValidation from "@/hooks/usePasswordValidation";
+import { Typography } from "@mui/material";
 
 const PasswordReset = () => {
     const [status, setStatus] = useState("ok");
@@ -27,9 +28,9 @@ const PasswordReset = () => {
     }
     return (
         <>
-            <Title level={2}>
+            <Typography variant="h6">
                 パスワードを再設定する
-            </Title>
+            </Typography>
             <InputForm>
                 <TextInput 
                     type="password"

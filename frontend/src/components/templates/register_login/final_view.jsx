@@ -5,45 +5,46 @@ import Button from "@/components/atoms/Button";
 import React from "react";
 import styled from "styled-components";
 import useCalorieAndPFC from "@/hooks/useCalorieAndPFC";
+import { Typography } from "@mui/material";
 
 const FinalView = ({ answers, onPrevious}) => {
     const {calorieIntake, protein, fat, carbs} = useCalorieAndPFC(answers);
     return (
         <>
-            <Title level={2}>
+            <Typography variant="h4">
                 あなたの一日の目安です
-            </Title>
+            </Typography>
             <ResultView>
                 <FactorArea>
-                    <Text fontWeight="bold">
+                    <Typography variant="bold1" sx={{fontWeight: "bold"}}>
                         摂取カロリー: 
-                    </Text>
+                    </Typography>
                     <span>{calorieIntake} kcal</span>
                 </FactorArea>
                 <FactorArea>
-                    <Text fontWeight="bold">
+                    <Typography variant="body1" sx={{fontWeight: "bold"}}>
                         タンパク質: 
-                    </Text>
+                    </Typography>
                     <span>{protein} g</span>
                 </FactorArea>
                 <FactorArea>
-                    <Text fontWeight="bold">
+                    <Typography variant="bold1" sx={{fontWeight: "bold"}}>
                         脂質: 
-                    </Text>
+                    </Typography>
                     <span>{fat} g</span>
                 </FactorArea>
                 <FactorArea>
-                    <Text fontWeight="bold">
+                    <Typography variant="body1" sx={{fontWeight: "bold"}}>
                         炭水化物: 
-                    </Text>
+                    </Typography>
                     <span>{carbs} g</span>
                 </FactorArea>
             </ResultView>
 
             <SampleMenuArea>
-                <Title level={3}>
+                <Typography variant="h5">
                     サンプルメニュー
-                </Title>
+                </Typography>
             </SampleMenuArea>            
 
             <FootButton>

@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Button from "@/components/atoms/Button";
 import useEmailValidation from "@/hooks/useEMailValidation";
 import usePasswordValidation from "@/hooks/usePasswordValidation";
+import { Typography } from "@mui/material";
 
 const TmpRegister = ({ onBackClick }) => {
     const [email, setEmail] = useState("");
@@ -29,9 +30,9 @@ const TmpRegister = ({ onBackClick }) => {
     }
     return (
         <>
-            <Title level={2}>
+            <Typography variant="h6">
                 仮登録
-            </Title>
+            </Typography>
             <InputForm>
                 <TextInput
                     type="email"
@@ -61,11 +62,19 @@ const TmpRegister = ({ onBackClick }) => {
                     onBlur={() => isMatchedPassword({password, valid_pw})}
                 />
                 <CheckBox
-                    label={`${<Link to='/' external={false}>利用規約</Link>}に同意します`}
+                    label={
+                        <>
+                            <Link to="/" external={false}>利用規約</Link>に同意します
+                        </>
+                    }
                     name="terms"
                 />
                 <CheckBox
-                    label={`${<Link to='/' external={false}>個人情報保護ポリシー</Link>}に同意します`}
+                    label={
+                        <>
+                            <Link to="/" external={false}>個人情報保護ポリシー</Link>に同意します
+                        </>
+                    }
                     name="policy"
                 />
                 <Button onClick={onClickRegister} disabled={!(isValidEmail && isValidPassword && isMatchedPassword({password, valid_pw}))}>

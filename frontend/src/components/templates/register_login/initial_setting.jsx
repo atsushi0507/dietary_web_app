@@ -9,6 +9,7 @@ import RadioButton from "@/components/atoms/RadioButton";
 import Button from "@/components/atoms/Button";
 import BasicAlert from "@/components/atoms/Alert";
 import dayjs from "dayjs";
+import { Typography } from "@mui/material";
 
 const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -80,9 +81,9 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
     return (
         <>
             <ProgressBar value={currentQuestionIndex + 1} maxValue={questions.length} isPercent={false}/>
-            <Title level={2}>
+            <Typography variant="h6">
                 {currentQuestion.label}
-            </Title>
+            </Typography>
             
             {/* 回答エリア */}
             {renderAnswerInput()}
