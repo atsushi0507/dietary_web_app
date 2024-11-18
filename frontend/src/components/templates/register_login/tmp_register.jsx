@@ -17,10 +17,6 @@ const TmpRegister = ({ onBackClick }) => {
     const {isValidEmail, validateEmail} = useEmailValidation();
     const {isValidPassword, validatePassword} = usePasswordValidation();
 
-    const onClickRegister = () => {
-        console.log("登録ボタンが押されました");
-    }
-
     const isMatchedPassword = ({password, valid_pw}) => {
         if (password === valid_pw) {
             return true;
@@ -28,6 +24,25 @@ const TmpRegister = ({ onBackClick }) => {
             return false;
         }
     }
+
+    const onClickRegister = async () => {
+        if (!email || !password || !valid_pw) {
+            alert("すべてのフィールドを入力してください");
+            return
+        }
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            await sendEmailVerification(user);
+
+            alert("確認メールを送信しました。メールボックスを確認してください");
+        } catch(error) {
+            alert("登録中にエラーが発生しました：" + error.message);
+        }
+    }
+
     return (
         <>
             <Typography variant="h6">
