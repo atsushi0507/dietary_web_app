@@ -9,7 +9,7 @@ import useEmailValidation from "@/hooks/useEMailValidation";
 import usePasswordValidation from "@/hooks/usePasswordValidation";
 import { Typography } from "@mui/material";
 import {createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
-import {auth} from "@/firebase/firebaseConfig";
+import { auth } from "@/firebase/firebaseConfig";
 
 const TmpRegister = ({ onBackClick }) => {
     const [email, setEmail] = useState("");
