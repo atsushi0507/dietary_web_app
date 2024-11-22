@@ -1,18 +1,25 @@
 "use client"; // クライアントサイドで動作することを宣言
-
 import React, { useState } from "react";
 import styled from "styled-components";
 import Link from "../atoms/Link";
 import Button from "../atoms/Button";
 import { useRouter } from "next/navigation"; // クライアントサイドでのみ動作するフック
+import { useAuth } from "@/contexts/authContext";
+import { auth } from "@/firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
+import BasicAlert from "../atoms/Alert";
 
 const Header = () => {
-    const router = useRouter(); // クライアント側で動作するはず
-    const [isLogin, setIsLogin] = useState(false);
+    const router = useRouter();
+    const { isLoggedIn = false } = useAuth();
 
-    const clickLogoutButton = () => {
-        console.log("ログアウトボタンが押されました");
-        // ログアウト処理の実装を行う
+    const clickLogoutButton = async () => {
+        try {
+            await signOut(auth);
+            router.push("/");
+        } catch (error) {
+            <BasicAlert severity={"error"} message={"ログアウトに失敗しました"} />
+        }
     };
 
     const clickLoginButton = () => {
@@ -27,7 +34,7 @@ const Header = () => {
                 <Link to="/record" external={false}>記録</Link>
                 <Link to="/summary" external={false}>サマリー</Link>
             </Nav>
-            {isLogin
+            {isLoggedIn
             ? <Button onClick={clickLogoutButton}>ログアウト</Button>
             : <Button onClick={clickLoginButton}>ログイン</Button>
             }

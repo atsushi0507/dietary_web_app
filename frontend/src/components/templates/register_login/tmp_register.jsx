@@ -1,4 +1,3 @@
-import Title from "@/components/atoms/Title";
 import CheckBox from "@/components/atoms/CheckBox";
 import TextInput from "@/components/atoms/TextInput";
 import Link from "@/components/atoms/Link";
@@ -39,7 +38,7 @@ const TmpRegister = ({ onBackClick }) => {
 
             await sendEmailVerification(user);
 
-            alert("確認メールを送信しました。メールボックスを確認してください");
+            alert("確認メールを送信しました。30 分以内に登録を完了してください。");
         } catch(error) {
             alert("登録中にエラーが発生しました：" + error.message);
         }
