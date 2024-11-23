@@ -1,12 +1,14 @@
+import useCalcTodaysNutrition from "@/hooks/useMealData";
 import React from "react";
 
 const MealRecordDisplay = ({ mealData }) => {
     // mealDataからmealRecordsを取得
-    const { mealRecords } = mealData;
+    // const { mealRecords } = mealData;
+    const todaysRecord = useCalcTodaysNutrition();
 
     return (
         <div>
-            {Object.entries(mealRecords).map(([mealType, menus]) => {
+            {/* {Object.entries(todaysRecord).map(([mealType, menus]) => {
                 if (menus === null) {
                     return (
                         <div key={mealType}>
@@ -23,7 +25,8 @@ const MealRecordDisplay = ({ mealData }) => {
                         </div>
                     );
                 }
-            })}
+            })} */}
+            
         </div>
     );
 };
