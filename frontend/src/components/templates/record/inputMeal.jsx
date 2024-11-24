@@ -52,6 +52,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
         };
         saveMealRecord(tmpData);
         resetState();
+        setSelectedMeal(null);
     };
 
     const handleNoMeal = () => {
@@ -59,10 +60,11 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
             user_id,
             date,
             meal_type: selectedMeal,
-            menus: {},
+            menus: {"食べなかった": 1},
         };
         saveMealRecord(tmpData);
         resetState();
+        setSelectedMeal(null);
     };
 
     const saveMealRecord = (mealData) => {
