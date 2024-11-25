@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Grid from "@mui/material/Grid2";
 import RadarChart from "@/components/atoms/RadarChart";
 import { List, ListItemText, Typography } from "@mui/material";
+import useCalcDailyTotalCalories from "@/hooks/useCalcDailyTotalCalories";
+import useCalcWeeklyNutrition from "@/hooks/useCalcWeeklyNutrition";
 
 const scores = [
     {
@@ -30,6 +32,10 @@ const scores = [
 const sampleFeedback = "カロリー管理が完璧ですね！全体的にバランスも良く、特に安定性が素晴らしいです。朝食を取る習慣をつけると、さらに体調が良くなるかもしれません。また、夕食の量を少し調整し、朝昼のカロリーを増やすことで、もっと効果的なバランスが取れますよ。引き続き、この調子で食事管理を進めてみましょう！"
 
 const Feedback = () => {
+    const weeklyData = useCalcWeeklyNutrition();
+    const dairyCalories = useCalcDailyTotalCalories(weeklyData);
+    console.log(dairyCalories);
+
     return (
         <Container>
             <Grid
