@@ -5,30 +5,8 @@ import RadarChart from "@/components/atoms/RadarChart";
 import { List, ListItemText, Typography } from "@mui/material";
 import useCalcDailyTotalCalories from "@/hooks/useCalcDailyTotalCalories";
 import useCalcWeeklyNutrition from "@/hooks/useCalcWeeklyNutrition";
-import useEvaluateDiet from "@/hooks/useEvaluateDIet";
+import useEvaluateDiet from "@/hooks/useEvaluateDiet";
 
-const scores = [
-    {
-        "label": "カロリー",
-        "score": 5.0,
-    },
-    {
-        "label": "PFCバランス",
-        "score": 4.2,
-    },
-    {
-        "label": "食事回数",
-        "score": 3.5,
-    },
-    {
-        "label": "カロリーバランス",
-        "score": 3.2,
-    },
-    {
-        "label": "安定性",
-        "score": 4.8,
-    }
-];
 
 const sampleFeedback = "カロリー管理が完璧ですね！全体的にバランスも良く、特に安定性が素晴らしいです。朝食を取る習慣をつけると、さらに体調が良くなるかもしれません。また、夕食の量を少し調整し、朝昼のカロリーを増やすことで、もっと効果的なバランスが取れますよ。引き続き、この調子で食事管理を進めてみましょう！"
 
@@ -44,7 +22,30 @@ const Feedback = () => {
     const dairyCalories = useCalcDailyTotalCalories(weeklyData);
 
     const evaluation = useEvaluateDiet(weeklyData, samplePerson);
-    console.log(evaluation);
+
+    const scores = [
+        {
+            label: "カロリー達成度",
+            score: evaluation.カロリー達成度 || 0, // フックの結果に合わせる
+        },
+        {
+            label: "PFCバランス",
+            score: evaluation.PFCバランス || 0,
+        },
+        {
+            label: "食事回数",
+            score: evaluation.食事回数 || 0,
+        },
+        {
+            label: "カロリーバランス",
+            score: evaluation.食事バランス || 0,
+        },
+        {
+            label: "安定性",
+            score: evaluation.安定性 || 0,
+        },
+    ];
+    const rank = evaluation.rank || null;
 
     return (
         <Container>
@@ -58,7 +59,7 @@ const Feedback = () => {
                 >
                     <UpperPart>
                     <Typography variant={{sx: "h3", md: "h3", lg: "h2"}} fontWeight="bold">
-                        食事スコア: A
+                        食事スコア: {rank}
                         <List style={{marginLeft: "8px"}}>
                         {scores.map((scoreData, index) => (
                             <ListItemText
@@ -81,12 +82,11 @@ const Feedback = () => {
                         <RadarChart 
                             title=""
                             darkMode={false}
-                            // indicators={["タンパク質", "脂質", "炭水化物"]}
-                            indicators={["P", "F", "C", "S", "O"]}
+                            indicators={["カロリー", "PFC", "食事回数", "バランス", "安定性"]}
                             seriesData={[
-                                { name: "", values: [5.0, 4.2, 3.5, 3.2, 4.8], color: "rgba(255, 188, 52, 0.6)" },
+                                { name: "", values: scores.map((s) => s.score), color: "rgba(255, 188, 52, 0.6)" },
                             ]}
-                            maxValues={[5, 5, 5]}
+                            maxValues={[5, 5, 5, 5, 5]}
                             chartHeight="150px"
                             unit=""
                         />

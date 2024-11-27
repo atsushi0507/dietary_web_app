@@ -27,24 +27,46 @@ const useCalcWeeklyNutrition = () => {
 
             const weeklyNutrition = pastSevenDays.map((date) => {
                 const dayRecord = storedData[date];
-                if (!dayRecord) return { date, totalCalories: 0, pfc: { protein: 0, fat: 0, carb: 0 }, meals: 0 };
+                if (!dayRecord) {
+                    return {
+                        date,
+                        totalCalories: 0,
+                        pfc: { protein: 0, fat: 0, carb: 0 },
+                        meals: 0,
+                        balance: { 朝食: 0, 昼食: 0, 夕食: 0 },
+                    };
+                }
 
                 let totalCalories = 0;
                 const pfc = { protein: 0, fat: 0, carb: 0 };
                 let mealCount = 0;
 
-                Object.values(dayRecord).forEach((menus) => {
+                const mealTypeCalories = { 朝食: 0, 昼食: 0, 夕食: 0 };
+
+                Object.entries(dayRecord).forEach(([mealType, menus]) => {
                     mealCount += 1; // 各食事タイプ
                     Object.entries(menus).forEach(([menuName, volume]) => {
                         const itemData = sampleDB.find((item) => item.menu === menuName);
                         if (!itemData) return;
 
-                        totalCalories += itemData.cal * volume * (itemData.volume / 100);
+                        const mealCalories = itemData.cal * volume * (itemData.volume / 100);
+                        totalCalories += mealCalories;
                         pfc.protein += itemData.protein * volume * (itemData.volume / 100);
                         pfc.fat += itemData.fat * volume * (itemData.volume / 100);
                         pfc.carb += itemData.carb * volume * (itemData.volume / 100);
+
+                        // 食事タイプごとのカロリーを集計
+                        if (mealType in mealTypeCalories) {
+                            mealTypeCalories[mealType] += mealCalories;
+                        }
                     });
                 });
+
+                // 食事タイプごとの割合を計算
+                const balance = Object.keys(mealTypeCalories).reduce((acc, key) => {
+                    acc[key] = totalCalories > 0 ? (mealTypeCalories[key] / totalCalories).toFixed(2) : 0;
+                    return acc;
+                }, {});
 
                 return {
                     date,
@@ -55,6 +77,7 @@ const useCalcWeeklyNutrition = () => {
                         carb: pfc.carb.toFixed(1),
                     },
                     meals: mealCount,
+                    balance,
                 };
             });
 
