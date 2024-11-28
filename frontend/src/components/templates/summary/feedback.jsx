@@ -32,18 +32,18 @@ const Feedback = () => {
             label: "PFCバランス",
             score: evaluation.PFCバランス || 0,
         },
-        {
-            label: "食事回数",
-            score: evaluation.食事回数 || 0,
-        },
+        // {
+        //     label: "食事回数",
+        //     score: evaluation.食事回数 || 0,
+        // },
         {
             label: "カロリーバランス",
             score: evaluation.食事バランス || 0,
         },
-        {
-            label: "安定性",
-            score: evaluation.安定性 || 0,
-        },
+        // {
+        //     label: "安定性",
+        //     score: evaluation.安定性 || 0,
+        // },
     ];
     const rank = evaluation.rank || null;
 
@@ -59,7 +59,7 @@ const Feedback = () => {
                 >
                     <UpperPart>
                     <Typography variant={{sx: "h3", md: "h3", lg: "h2"}} fontWeight="bold">
-                        食事スコア: {rank}
+                        総合評価: {rank}
                         <List style={{marginLeft: "8px"}}>
                         {scores.map((scoreData, index) => (
                             <ListItemText
@@ -82,11 +82,12 @@ const Feedback = () => {
                         <RadarChart 
                             title=""
                             darkMode={false}
-                            indicators={["カロリー", "PFC", "食事回数", "バランス", "安定性"]}
+                            // indicators={["カロリー", "PFC", "食事回数", "バランス", "安定性"]}
+                            indicators={["カロリー", "PFC", "バランス"]}
                             seriesData={[
                                 { name: "", values: scores.map((s) => s.score), color: "rgba(255, 188, 52, 0.6)" },
                             ]}
-                            maxValues={[5, 5, 5, 5, 5]}
+                            maxValues={[5, 5, 5]}
                             chartHeight="150px"
                             unit=""
                         />

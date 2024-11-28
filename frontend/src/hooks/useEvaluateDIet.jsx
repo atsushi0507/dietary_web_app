@@ -22,7 +22,7 @@ const useEvaluateDiet = (inputData, personalTarget) => {
     const evaluateCalories = () => {
         const scores = dairyCalories.map((dayCalories) => {
             const absDiff = Math.abs(parseFloat(dayCalories.totalCalories) - personalTarget.cal) / personalTarget.cal;
-            return Math.max(5 - absDiff * 10, 1);
+            return Math.max(5 - absDiff * 10, 0); // 線形の減点係数では、目安に近いときでも小さな差分が同じウェイトで減点されてしまう
         });
         return parseFloat((scores.reduce((a, b) => a + b, 0) / 7).toFixed(1));
     };
@@ -36,7 +36,7 @@ const useEvaluateDiet = (inputData, personalTarget) => {
             Math.sqrt(((p - personalTarget.P) / personalTarget.P)**2 +
             ((f - personalTarget.F) / personalTarget.F)**2 +
             ((c - personalTarget.C) / personalTarget.C)**2) / 3;
-            return Math.abs(5 - deviation * 10, 1); // 減点係数: 0.05
+            return Math.max(5 - deviation * 10, 0); // 減点係数: 0.05
         });
         return parseFloat((scores.reduce((a, b) => a + b, 0) / 7).toFixed(1));
     };
@@ -57,7 +57,7 @@ const useEvaluateDiet = (inputData, personalTarget) => {
         const pDiff = (pMean - personalTarget.P) / personalTarget.P;
         const fDiff = (fMean - personalTarget.F) / personalTarget.F;
         const cDiff = (cMean - personalTarget.C) / personalTarget.C;
-                
+
         const deviations = [
             {type: "protein", diff: pDiff},
             {type: "fat", diff: fDiff},
@@ -86,18 +86,22 @@ const useEvaluateDiet = (inputData, personalTarget) => {
     };
 
     const evaluateMealBalancee = () => {
-        const idealRatio = {朝食: 0.3, 昼食: 0.4, 夕食: 0.3};
+        const idealBreakfast = personalTarget.cal * 0.3;
+        const idealLunch = personalTarget.cal * 0.4;
+        const idealDinner = personalTarget.cal * 0.3;
         const scores = balances.map((balance) => {
             const breakfast = parseFloat(balance.balance.朝食);
             const lunch = parseFloat(balance.balance.昼食);
             const dinner = parseFloat(balance.balance.夕食);
             const deviation = 
             Math.sqrt(
-                ((breakfast - idealRatio.朝食) / idealRatio.朝食)**2 +
-                ((lunch - idealRatio.昼食) / idealRatio.昼食)**2 +
-                ((dinner - idealRatio.夕食) / idealRatio.夕食)**2
+                ((breakfast - idealBreakfast) / idealBreakfast)**2 +
+                ((lunch - idealLunch) / idealLunch)**2 +
+                ((dinner - idealDinner) / idealDinner)**2
             ) / 3;
-            return Math.max(5 - deviation * 10, 1);
+            // const score = 5 * Math.exp(-deviation * 5);
+            const score = Math.max(5 - deviation * 10, 0);
+            return parseFloat(score.toFixed(1));
         });
         return parseFloat((scores.reduce((a, b) => a + b, 0) / 7).toFixed(1));
     }
@@ -110,24 +114,24 @@ const useEvaluateDiet = (inputData, personalTarget) => {
         const mean = calories.reduce((a, b) => a + b, 0) / 7;
         const variance = calories.reduce((sum, cal) => sum + (cal - mean) ** 2, 0) / 7;
         const sigma = Math.sqrt(variance);
-        return Math.max(5 - sigma * 0.01, 1); // 減点係数: 0.1 (100 kcalで1点減点)
+        return Math.max(5 - sigma * 0.01, 0); // 減点係数: 0.1 (100 kcalで1点減点)
     }
 
     const totalScore = useMemo(() => {
         const scores = {
             カロリー達成度: evaluateCalories(),
             PFCバランス: evaluatePFC(),
-            食事回数: evaluateCount(),
+            // 食事回数: evaluateCount(),
             食事バランス: evaluateMealBalancee(),
-            安定性: evaluateStability()
+            // 安定性: evaluateStability()
         };
 
         const total = Object.values(scores).reduce((a, b) => a + b, 0);
         let rank;
-        if (total >= 21) rank = "S";
-        else if (total >= 16) rank = "A";
-        else if (total >= 11) rank = "B";
-        else if (total >= 6) rank = "C";
+        if (total >= 12) rank = "S";
+        else if (total >= 9) rank = "A";
+        else if (total >= 6) rank = "B";
+        else if (total >= 3) rank = "C";
         else rank = "D";
         return {...scores, total: parseFloat(total.toFixed(1)), rank, deviation: getPFCDeviationDetails()};
     }, [inputData, personalTarget]);

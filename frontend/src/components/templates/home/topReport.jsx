@@ -4,6 +4,8 @@ import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import CustomProgressBar from "@/components/atoms/customProgressBar";
 import RadarChart from "@/components/atoms/RadarChart";
+import useCalcWeeklyNutrition from "@/hooks/useCalcWeeklyNutrition";
+import useEvaluateDiet from "@/hooks/useEvaluateDIet";
 
 const TopReport = ({mealData, person}) => {
     const allMeals = mealData.flatMap(({meal_type, nutrition}) => 
@@ -19,6 +21,10 @@ const TopReport = ({mealData, person}) => {
     const proteinScore = totalProtein / person.P * 100;
     const fatScore = totalFat / person.F * 100;
     const carbScore = totalCarb / person.C * 100;
+
+    // 総合評価
+    const weeklyData = useCalcWeeklyNutrition();
+    const evaluate = useEvaluateDiet(weeklyData, person);
 
     return (
         <TopContainer>
@@ -50,7 +56,7 @@ const TopReport = ({mealData, person}) => {
                         </ProgressBarArea>
                         <ScoreArea>
                             <Typography variant="body1">
-                                最近の食事スコア: <strong>B</strong>
+                                直近の食事評価: <strong>{evaluate.rank}</strong>
                             </Typography>
                         </ScoreArea>
                     </div>
