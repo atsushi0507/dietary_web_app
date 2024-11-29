@@ -1,14 +1,43 @@
 "use client";
-import Text from "@/components/atoms/Text";
-import Title from "@/components/atoms/Title";
 import Button from "@/components/atoms/Button";
 import React from "react";
 import styled from "styled-components";
 import useCalorieAndPFC from "@/hooks/useCalorieAndPFC";
 import { Typography } from "@mui/material";
+import axios from "axios";
+import { auth } from "@/firebase/firebaseConfig";
 
 const FinalView = ({ answers, onPrevious}) => {
     const {calorieIntake, protein, fat, carbs} = useCalorieAndPFC(answers);
+
+    const addUserToFS = async () => {
+        try {
+            const user = auth.currentUser;
+            const uid = user.uid;
+
+            const userData = {
+                "weight": parseFloat(answers.weight),
+                "height": parseFloat(answers.height),
+                "birthday": answers.birthdate,
+                "gender": answers.gender,
+                "activityLevel": answers.activityLevel,
+                "goal": answers.goal,
+                "cal": calorieIntake,
+                "protein": protein,
+                "fat": fat,
+                "carb": carbs
+            };
+            const response = await axios.post(
+                "https://asia-northeast1-dietary-web-app.cloudfunctions.net/add_user_to_fs",
+                userData
+            );
+            console.log("User add successfully: " + response.data.message);
+        } catch(error) {
+            console.error("Error at add user to firestore: " + error.message);
+        }
+        
+    }
+
     return (
         <>
             <Typography variant="h4">
@@ -51,7 +80,7 @@ const FinalView = ({ answers, onPrevious}) => {
                 <Button onClick={onPrevious}>
                     戻る
                 </Button>
-                <Button onClick={() => alert("完了です！")}>
+                <Button onClick={addUserToFS}>
                     完了
                 </Button>
             </FootButton>
