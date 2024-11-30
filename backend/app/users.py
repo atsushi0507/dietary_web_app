@@ -5,21 +5,24 @@ from models.users import AddUser
 
 def add_user_to_fs(request):
     try:
-        request_json = request.get_json(silent=True)
+        request_json = request.get_json(silent=False)
+        print(f"Received request JSON: {request_json}")
+
         user_data = AddUser(**request_json)
+        print(f"Validated user data: {user_data}")
 
         add_user(
-            user_data.user_id,
-            user_data.weight,
-            user_data.height,
-            user_data.birthday,
-            user_data.gender,
-            user_data.activityLevel,
-            user_data.goal,
-            user_data.cal,
-            user_data.protein,
-            user_data.fat,
-            user_data.carb
+            user_id=user_data.user_id,
+            weight=user_data.weight,
+            height=user_data.height,
+            birthday=user_data.birthday,
+            gender=user_data.gender,
+            activity_level=user_data.activityLevel,
+            goal=user_data.goal,
+            cal=user_data.cal,
+            protein=user_data.protein,
+            fat=user_data.fat,
+            carb=user_data.carb
         )
 
     except Exception as e:

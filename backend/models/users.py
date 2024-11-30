@@ -1,12 +1,11 @@
 from pydantic import BaseModel, Field
-from datetime import date
 
 
 class AddUser(BaseModel):
     user_id: str
-    height: float
-    weight: float
-    birthday: date
+    height: float = Field(..., gt=0, description="Height in centimeters")
+    weight: float = Field(..., gt=0, description="Weight in kilograms")
+    birthday: str  # Format: YYYY-MM-DD
     gender: str
     activityLevel: str
     goal: str
