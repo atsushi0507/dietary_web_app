@@ -12,54 +12,6 @@ const FinalView = ({ answers, onPrevious}) => {
     const {calorieIntake, protein, fat, carbs} = useCalorieAndPFC(answers);
     const router = useRouter();
 
-    // const addUserToFS = async () => {
-    //     try {
-    //         const user = auth.currentUser;
-    //         if (!user || !user.uid) {
-    //             console.error("User is not authenticated or UID is missing.");
-    //             return;
-    //         }
-    //         const uid = user.uid;
-
-    //         const userData = {
-    //             "user_id": uid,
-    //             "height": parseFloat(answers.height),
-    //             "weight": parseFloat(answers.weight),
-    //             "birthday": answers.birthdate,
-    //             "gender": answers.gender,
-    //             "activityLevel": answers.activityLevel,
-    //             "goal": answers.goal,
-    //             "cal": calorieIntake,
-    //             "protein": protein,
-    //             "fat": fat,
-    //             "carb": carbs
-    //         };
-    //         console.log(userData);
-    //         const response = await axios.post(
-    //             "https://asia-northeast1-dietary-web-app.cloudfunctions.net/add_user",
-    //             userData
-    //         );
-    //         localStorage.setItem('userData', JSON.stringify(userData));
-
-    //         router.push("/home");
-    //     } catch(error) {
-    //         if (error.response) {
-    //             // サーバー側のレスポンスエラー (Cloud Functions のエラー含む)
-    //             console.error("Error response from server: ", {
-    //                 data: error.response.data, // サーバーからのエラーメッセージ
-    //                 status: error.response.status, // HTTPステータスコード
-    //                 headers: error.response.headers, // レスポンスヘッダー
-    //             });
-    //         } else if (error.request) {
-    //             // リクエストは送信されたがレスポンスが受信されなかった場合
-    //             console.error("No response received: ", error.request);
-    //         } else {
-    //             // リクエスト設定のエラー
-    //             console.error("Error at add user to firestore: ", error.message);
-    //         }
-    //     }
-        
-    // }
     const addUserToFS = async () => {
         try {
             const user = auth.currentUser;
@@ -82,7 +34,6 @@ const FinalView = ({ answers, onPrevious}) => {
                 "fat": fat,
                 "carb": carbs
             };
-            console.log(userData);
     
             // Firestore への書き込み
             const response = await axios.post(
