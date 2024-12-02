@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid2";
 import CustomProgressBar from "@/components/atoms/customProgressBar";
 import RadarChart from "@/components/atoms/RadarChart";
 import useCalcWeeklyNutrition from "@/hooks/useCalcWeeklyNutrition";
-import useEvaluateDiet from "@/hooks/useEvaluateDIet";
+import useEvaluateDiet from "@/hooks/useEvaluateDiet";
 
 const TopReport = ({mealData, person}) => {
     const allMeals = mealData.flatMap(({meal_type, nutrition}) => 

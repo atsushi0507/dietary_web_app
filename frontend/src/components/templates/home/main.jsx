@@ -6,7 +6,6 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import BalanceIcon from '@mui/icons-material/Balance';
 import MenuList from "./menuList";
-import sampleData from "@/public/sampleMeals.json";
 import CalorieRanking from "./calorieRanking";
 import BalanceRanking from "./balanceRanking";
 import styled from "styled-components";
@@ -19,17 +18,17 @@ const tabOptions = [
     { icon: <BalanceIcon />, label: "バランス" }
 ];
 
-const samplePerson = {
-    "cal": 2230.4,
-    "P": 88.0,
-    "F": 65.2,
-    "C": 352.1
-}
-
 const Main = () => {
     const [selectedTab, setSelectedTab] = useState(0);
 
     const sampleFromLS = useCalcTodaysNutrition();
+    const personalData = JSON.parse(localStorage.getItem("userData"));
+    const basicInfo = {
+        "cal": parseFloat(personalData.cal).toFixed(1),
+        "P": parseFloat(personalData.protein).toFixed(1),
+        "F": parseFloat(personalData.fat).toFixed(1),
+        "C": parseFloat(personalData.carb).toFixed(1)
+    }
 
     const handleSelectedTab = (e, newValue) => {
         setSelectedTab(newValue);
@@ -38,7 +37,7 @@ const Main = () => {
     return (
         <Grid container direction="column">
             <Grid size={12}>
-                <TopReport mealData={sampleFromLS} person={samplePerson}/>
+                <TopReport mealData={sampleFromLS} person={basicInfo}/>
             </Grid>
             <Grid size={12}>
                 <BasicTab
@@ -48,7 +47,7 @@ const Main = () => {
                 />
                 {selectedTab === 0 && <MenuList mealData={sampleFromLS} />}
                 {selectedTab === 1 && <CalorieRanking mealData={sampleFromLS} />}
-                {selectedTab === 2 && <BalanceRanking mealData={sampleFromLS} person={samplePerson}/>}
+                {selectedTab === 2 && <BalanceRanking mealData={sampleFromLS} person={basicInfo}/>}
             </Grid>
         </Grid>
     );

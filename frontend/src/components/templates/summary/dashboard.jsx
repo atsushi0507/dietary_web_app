@@ -5,6 +5,11 @@ import sampleData from "@/public/sampleAchievement.json";
 import LineChart from "@/components/atoms/LineChart";
 import PieChart from "@/components/atoms/PieChart";
 import HeatMap from "@/components/atoms/HeatMap";
+import useCalcWeeklyNutrition from "@/hooks/useCalcWeeklyNutrition";
+import { useAveragePFC } from "@/hooks/useAveragePFC";
+import { useMealTypeAverageCalories } from "@/hooks/useMealTypeAverageCalories";
+import useMealCount from "@/hooks/useMealCount";
+import useNutrientRatio from "@/hooks/useNutritionRatio";
 
 const tabOptions = [
     {label: "達成度"},
@@ -12,19 +17,6 @@ const tabOptions = [
     {label: "カロリーバランス"},
     {label: "ヒートマップ"}
 ];
-
-const samplePFCData = [
-    {name: "タンパク質", value: 82.5},
-    {name: "脂質", value: 61.0},
-    {name: "炭水化物", value: 330.0}
-];
-
-const sampleCalorieData = [
-    {name: "朝食", value: 616.5},
-    {name: "昼食", value: 946.8},
-    {name: "夕食", value: 620.1},
-    {name: "間食", value: 123.5}
-]
 
 const sampleHeatmapData = [
     ["2024-05-01", 3], ["2024-05-02", 3], ["2024-05-03", 2], ["2024-05-04", 3],["2024-05-05", 3],
@@ -35,12 +27,20 @@ const sampleHeatmapData = [
     ["2024-05-26", 3], ["2024-05-27", 4], ["2024-05-28", 2], ["2024-05-29", 3],["2024-05-30", 3],
     ["2024-05-31", 3], ["2024-06-01", 3], ["2024-06-02", 3], ["2024-06-03", 2]
 ]
+console.log(sampleHeatmapData);
 
 const Dashboard = () => {
     const [selectedTab, setSelectedTab] = useState(0);
     const handleTab = (e, newValue) => {
         setSelectedTab(newValue)
     }
+
+    const weeklyData = useCalcWeeklyNutrition();
+    const averagePFC = useAveragePFC(weeklyData);
+    const averageMealCalories = useMealTypeAverageCalories(weeklyData);
+    const heatmapData = useMealCount();
+    const nutritionRatio = useNutrientRatio();
+    console.log(nutritionRatio);
 
     return (
         <Container>
@@ -60,14 +60,15 @@ const Dashboard = () => {
             {selectedTab === 1 &&
             <PieChart
                 title="PFCバランス"
-                data={samplePFCData}
+                // data={samplePFCData}
+                data={averagePFC}
                 height="300px"
             />
             }
             {selectedTab === 2 &&
             <PieChart
                 title="カロリーバランス"
-                data={sampleCalorieData}
+                data={averageMealCalories}
                 height="300px"
             />
             }
