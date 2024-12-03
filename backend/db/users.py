@@ -35,3 +35,19 @@ def add_user(
     except Exception as e:
         print(f"Error saving user {user_id} to Firestore: {e}")
         raise Exception(f"Firestore save error: {e}")
+
+
+def getuser(
+    uid: str
+):
+    try:
+        users_doc = firestore_db.collection("users").document(uid).get()
+        if users_doc.exists:
+            return users_doc.to_dict()  # データを辞書形式で返す
+        else:
+            print(f"No such document for UID: {uid}")
+            return None
+
+    except Exception as e:
+        print(f"Error retrieving user info: {e}")
+        return None

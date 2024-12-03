@@ -1,5 +1,5 @@
 import json
-from db.users import add_user
+from db.users import add_user, getuser
 from models.users import AddUser
 
 
@@ -25,5 +25,13 @@ def add_user_to_fs(request):
             carb=user_data.carb
         )
 
+    except Exception as e:
+        return json.dump({"error": str(e)}), 500
+
+
+def get_user_info(uid):
+    try:
+        user_info = getuser(uid)
+        return user_info
     except Exception as e:
         return json.dump({"error": str(e)}), 500
