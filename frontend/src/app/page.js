@@ -39,7 +39,6 @@ export default function Home() {
         <BasicAlert severity="info" message="Info" />
         <BasicAlert severity="warning" message="Warning" />
         <BasicAlert severity="error" message="Error" />
-        <Link to="https://yahoo.co.jp" external={true} children="Yahoo Japan"  />
 
         <CheckBox 
           label="I agree to the terms and conditions of Zoomin"
