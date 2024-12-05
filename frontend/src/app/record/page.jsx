@@ -1,11 +1,14 @@
 "use client";
 import RecordTop from '@/components/templates/record/main';
+import withAuth from '@/hoc/withAuth';
 import React from 'react';
 
-export default function Page() {
+const Page = () => {
   return (
     <>
         <RecordTop />
     </>
   );
-}
+};
+
+export default withAuth(Page);

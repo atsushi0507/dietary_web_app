@@ -1,153 +1,89 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./page.module.css";
-import Button from "@/components/atoms/Button";
-import BasicAlert from "@/components/atoms/Alert";
-import CheckBox from "@/components/atoms/CheckBox";
-import Link from "@/components/atoms/Link";
-import { useState } from "react";
-import Calendar from "@/components/atoms/Calendar";
-import ProgressBar from "@/components/atoms/ProgressBar";
-import BasicTab from "@/components/atoms/Tab";
+import { Button, Box, Container, Typography, Grid, Card, CardContent, Icon } from '@mui/material';
 
 export default function Home() {
-  const [isChecked, setIsChecked] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [val, setVal] = useState(0);
-
-  const handleTabChange = (e, newValue) => {
-    console.log(newValue);
-    setVal(newValue);
-  }
-
-  const handleCheckBoxChange = (event) => {
-    setIsChecked(event.target.checked);
-  };
-
-  const handleIncrement = () => {
-    setProgress((prev) => Math.min(prev + 10, 100));
-  };
-
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Button>
-          test
+    <div>
+      {/* ヒーローセクション */}
+      <Box sx={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundSize: 'cover', color: 'white', py: 6 }}>
+        <Container>
+          <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>
+            食事を簡単に管理して、目指す健康的なバランスを
+          </Typography>
+          <Typography variant="h5" sx={{ mb: 4 }}>
+            カロリーとPFCバランスを一目でチェック。簡単な記録で長期的な健康を支援します
+          </Typography>
+          <Button variant="contained" color="primary" size="large" sx={{ borderRadius: 3 }}>
+            アプリを始める
+          </Button>
+        </Container>
+      </Box>
+
+      {/* アプリの特徴セクション */}
+      <Container sx={{ py: 6 }}>
+        <Typography variant="h4" sx={{ textAlign: 'center', mb: 4 }}>アプリの特徴</Typography>
+        <Grid container spacing={4} justifyContent="center">
+          <Grid item xs={12} md={4}>
+            <Card>
+              <CardContent>
+                <Icon sx={{ fontSize: 50, color: 'primary.main' }}>check_circle</Icon>
+                <Typography variant="h6" sx={{ mt: 2 }}>シンプルな操作</Typography>
+                <Typography sx={{ mt: 1 }}>
+                  わかりやすく、誰でも簡単に始められる食事記録機能。
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Card>
+              <CardContent>
+                <Icon sx={{ fontSize: 50, color: 'primary.main' }}>dashboard</Icon>
+                <Typography variant="h6" sx={{ mt: 2 }}>PFCバランス重視</Typography>
+                <Typography sx={{ mt: 1 }}>
+                  食事を長期的に見守り、PFCバランスを最適化。
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Card>
+              <CardContent>
+                <Icon sx={{ fontSize: 50, color: 'primary.main' }}>assessment</Icon>
+                <Typography variant="h6" sx={{ mt: 2 }}>長期的な安定をサポート</Typography>
+                <Typography sx={{ mt: 1 }}>
+                  食事内容を定期的に評価し、健康的な改善をサポートします。
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+
+      {/* 実際の利用シーンセクション */}
+      <Box sx={{ backgroundColor: '#f7f7f7', py: 6 }}>
+        <Container>
+          <Typography variant="h4" sx={{ textAlign: 'center', mb: 4 }}>実際に使ってみると</Typography>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={6}>
+              <img src="https://source.unsplash.com/random" alt="食事の例" style={{ width: '100%', borderRadius: 8 }} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="body1">
+                あなたの食事記録を元に、カロリーやPFCバランスを評価し、毎日のフィードバックが得られます。
+              </Typography>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* CTAセクション */}
+      <Box sx={{ py: 6, textAlign: 'center' }}>
+        <Typography variant="h4" sx={{ mb: 2 }}>健康的な食生活を始めよう！</Typography>
+        <Button variant="contained" color="primary" size="large" sx={{ borderRadius: 3 }}>
+          今すぐ始める
         </Button>
-        <BasicAlert severity="success" message="Success!" />
-        <BasicAlert severity="info" message="Info" />
-        <BasicAlert severity="warning" message="Warning" />
-        <BasicAlert severity="error" message="Error" />
-
-        <CheckBox 
-          label="I agree to the terms and conditions of Zoomin"
-          checked={isChecked}
-          onChange={handleCheckBoxChange}
-          name="terms"
-        />
-
-        <BasicTab items={["食事", "体重"]} value={val} onChange={handleTabChange}/>
-
-        <div>
-          <h1>Progress Bar Example</h1>
-          <ProgressBar value={progress} maxValue={100} isPercent={true} key="id1"/>
-          <button onClick={handleIncrement}>Increase Progress</button>
-        </div>
-        <div>
-          <h1>Progress Bar Example 2</h1>
-          <ProgressBar value={2} maxValue={6} isPercent={false} key="id2"/>
-          <button onClick={handleIncrement}>Increase Progress</button>
-        </div>
-
-        <Calendar />
-
-
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </Box>
     </div>
   );
 }

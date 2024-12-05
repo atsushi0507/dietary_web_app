@@ -30,9 +30,6 @@ const Dashboard = () => {
     const heatmapData = useMealCount();
     const nutritionRatio = useNutrientRatio();
 
-    console.log(sampleData);
-    console.log(nutritionRatio);
-
     return (
         <Container>
             <BasicTab

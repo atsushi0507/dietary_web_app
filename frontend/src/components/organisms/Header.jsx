@@ -26,9 +26,15 @@ const Header = () => {
         router.push('/register_login'); // クライアントサイドでページ遷移
     };
 
+    const clickLogo = () => {
+        router.push('/'); // ロゴクリックでトップページに遷移
+    };
+
     return (
         <HeaderContaint>
-            <Logo>アプリのタイトルロゴ</Logo>
+            <Logo onClick={clickLogo}>
+                <LogoImage src="/sample_logo.png" alt="アプリロゴ" />
+            </Logo>
             <Nav>
                 <Link to="/home" external={false}>ホーム</Link>
                 <Link to="/record" external={false}>記録</Link>
@@ -56,6 +62,12 @@ const HeaderContaint = styled.header`
 const Logo = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
+    cursor: pointer; /* クリック可能にするためにカーソルをポインターに */
+`;
+
+const LogoImage = styled.img`
+    height: 60px; /* ロゴ画像の高さ */
+    width: auto; /* アスペクト比を維持 */
 `;
 
 const Nav = styled.nav`

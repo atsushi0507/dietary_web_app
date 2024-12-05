@@ -1,6 +1,7 @@
+"use client";
 import Main from "@/components/templates/summary/main";
 import React from "react";
-import styled from "styled-components";
+import withAuth from "@/hoc/withAuth";
 
 const Summary = () => {
     return (
@@ -10,4 +11,4 @@ const Summary = () => {
     );
 };
 
-export default Summary;
+export default withAuth(Summary);
