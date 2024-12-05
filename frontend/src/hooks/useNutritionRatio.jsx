@@ -5,16 +5,15 @@ import useCalculateAllNutrition from "@/hooks/useCalculateAllNutrition";
 const useNutritionRatio = () => {
     const [weeklyData, setWeeklyData] = useState([]);
     const allNutritionData = useCalculateAllNutrition();
-    console.log(allNutritionData);
 
     // ローカルストレージから目標摂取量 (userData) を取得
     const getUserData = () => {
         const userData = JSON.parse(localStorage.getItem("userData"));
         return userData || {
-            calories: 2000,
+            cal: 2000,
             protein: 100,
             fat: 70,
-            carb: 250
+            carb: 250,
         }; // デフォルト値
     };
 
@@ -48,11 +47,11 @@ const useNutritionRatio = () => {
                 };
             }
 
-            // 摂取量と目標摂取量の比率を計算
-            const calories = parseFloat((dayData.calories / userData.cal).toFixed(1));
-            const protein = parseFloat((dayData.protein / userData.protein).toFixed(1));
-            const fat = parseFloat((dayData.fat / userData.fat).toFixed(1));
-            const carb = parseFloat((dayData.carbs / userData.carb).toFixed(1));
+            // 摂取量と目標摂取量の比率を計算（百分率）
+            const calories = parseFloat(((dayData.calories / userData.cal) * 100).toFixed(1));
+            const protein = parseFloat(((dayData.protein / userData.protein) * 100).toFixed(1));
+            const fat = parseFloat(((dayData.fat / userData.fat) * 100).toFixed(1));
+            const carb = parseFloat(((dayData.carb / userData.carb) * 100).toFixed(1));
 
             return {
                 date,
@@ -63,7 +62,8 @@ const useNutritionRatio = () => {
             };
         });
 
-        return weeklyNutrition;
+        // 日付順に並び替え（古い順）
+        return weeklyNutrition.sort((a, b) => new Date(a.date) - new Date(b.date));
     };
 
     useEffect(() => {

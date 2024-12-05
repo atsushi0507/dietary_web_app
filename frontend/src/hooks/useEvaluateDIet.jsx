@@ -27,6 +27,17 @@ const useEvaluateDiet = (inputData, personalTarget) => {
         return parseFloat((scores.reduce((a, b) => a + b, 0) / 7).toFixed(1));
     };
 
+    const evaluateCalorieDeviation = () => {
+        const calories = dairyCalories.map((day) => parseFloat(day.totalCalories));
+        const mean = calories.reduce((a, b) => a + b, 0) / 7;
+        const deviation = (mean - personalTarget.cal) / personalTarget.cal;
+        return {
+            average: parseFloat(mean.toFixed(1)),
+            deviation: parseFloat((deviation * 100).toFixed(1)),
+            high_low: deviation > 0 ? "+" : "-"
+        };
+    };
+
     const evaluatePFC = () => {
         const scores = pfcs.map((pfc) => {
             const p = parseFloat(pfc.protein);
@@ -70,7 +81,8 @@ const useEvaluateDiet = (inputData, personalTarget) => {
 
         return {
             type: maxDeviation.type,
-            value: `${maxDeviation.diff > 0 ? "+" : ""}${(maxDeviation.diff*100).toFixed(1)}%`
+            value: (maxDeviation.diff*100).toFixed(1),
+            high_low: maxDeviation.diff > 0 ? "+" : "-"
         };
 
     }
@@ -104,7 +116,55 @@ const useEvaluateDiet = (inputData, personalTarget) => {
             return parseFloat(score.toFixed(1));
         });
         return parseFloat((scores.reduce((a, b) => a + b, 0) / 7).toFixed(1));
-    }
+    };
+
+    const getCalorieBalanceDeviationDetails = () => {
+        const deviations = balances.map((balance) => {
+            const breakfast = parseFloat(balance.balance.朝食);
+            const lunch = parseFloat(balance.balance.昼食);
+            const dinner = parseFloat(balance.balance.夕食);
+    
+            const idealBreakfast = personalTarget.cal * 0.3;
+            const idealLunch = personalTarget.cal * 0.4;
+            const idealDinner = personalTarget.cal * 0.3;
+    
+            return {
+                朝食: (breakfast - idealBreakfast) / idealBreakfast,
+                昼食: (lunch - idealLunch) / idealLunch,
+                夕食: (dinner - idealDinner) / idealDinner,
+            };
+        });
+    
+        const summedDeviations = deviations.reduce(
+            (total, current) => {
+                total.朝食 += Math.abs(current.朝食);
+                total.昼食 += Math.abs(current.昼食);
+                total.夕食 += Math.abs(current.夕食);
+                return total;
+            },
+            { 朝食: 0, 昼食: 0, 夕食: 0 }
+        );
+    
+        const averageDeviations = {
+            朝食: summedDeviations.朝食 / 7,
+            昼食: summedDeviations.昼食 / 7,
+            夕食: summedDeviations.夕食 / 7,
+        };
+    
+        const maxDeviation = Object.entries(averageDeviations).reduce(
+            (max, current) =>
+                Math.abs(current[1]) > Math.abs(max.value)
+                    ? { type: current[0], value: current[1] }
+                    : max,
+            { type: "", value: 0 }
+        );
+    
+        return {
+            type: maxDeviation.type,
+            value: (maxDeviation.value * 100).toFixed(1),
+            high_low: maxDeviation.value > 0 ? "+" : "-",
+        };
+    };   
 
     const evaluateStability = () => {
         const calories = [];
@@ -133,7 +193,13 @@ const useEvaluateDiet = (inputData, personalTarget) => {
         else if (total >= 6) rank = "B";
         else if (total >= 3) rank = "C";
         else rank = "D";
-        return {...scores, total: parseFloat(total.toFixed(1)), rank, deviation: getPFCDeviationDetails()};
+        return {...scores,
+            total: parseFloat(total.toFixed(1)),
+            rank,
+            deviation: getPFCDeviationDetails(),
+            calorieDeviation: evaluateCalorieDeviation(),
+            calorieBalanceDeviation: getCalorieBalanceDeviationDetails()
+        };
     }, [inputData, personalTarget]);
 
     return totalScore;

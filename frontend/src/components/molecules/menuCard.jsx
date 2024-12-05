@@ -1,9 +1,10 @@
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NumberInput from "../atoms/NumberInput";
+import CloseIcon from "@mui/icons-material/Close";
 
-const MenuCard = ({ menuData, onVolumeChange }) => {
+const MenuCard = ({ menuData, onVolumeChange, onDelete }) => {
     const { menu, cal } = menuData;
     const [volume, setVolume] = useState(1.0);
 
@@ -26,6 +27,13 @@ const MenuCard = ({ menuData, onVolumeChange }) => {
                 <Typography variant="p" sx={{marginLeft: "10px"}}>
                     {cal * volume} kcal
                 </Typography>
+                <IconButton
+                    size="small"
+                    onClick={() => onDelete(menu)}
+                    sx={{marginLeft: "auto"}}
+                >
+                    <CloseIcon />
+                </IconButton>
             </MenuAndCalorie>
             <VolumeArea>
                 <NumberInput

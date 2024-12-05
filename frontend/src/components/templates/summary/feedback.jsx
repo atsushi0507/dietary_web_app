@@ -5,6 +5,7 @@ import RadarChart from "@/components/atoms/RadarChart";
 import { List, ListItemText, Typography } from "@mui/material";
 import useCalcWeeklyNutrition from "@/hooks/useCalcWeeklyNutrition";
 import useEvaluateDiet from "@/hooks/useEvaluateDiet";
+import useGenerateFeedback from "@/hooks/useGenerateFeedback";
 
 const sampleFeedback = "カロリー管理が完璧ですね！全体的にバランスも良く、特に安定性が素晴らしいです。朝食を取る習慣をつけると、さらに体調が良くなるかもしれません。また、夕食の量を少し調整し、朝昼のカロリーを増やすことで、もっと効果的なバランスが取れますよ。引き続き、この調子で食事管理を進めてみましょう！"
 
@@ -20,6 +21,7 @@ const Feedback = () => {
     const weeklyData = useCalcWeeklyNutrition();
 
     const evaluation = useEvaluateDiet(weeklyData, basicInfo);
+    const message = useGenerateFeedback(evaluation);
 
     const scores = [
         {
@@ -30,18 +32,10 @@ const Feedback = () => {
             label: "PFCバランス",
             score: evaluation.PFCバランス || 0,
         },
-        // {
-        //     label: "食事回数",
-        //     score: evaluation.食事回数 || 0,
-        // },
         {
             label: "カロリーバランス",
             score: evaluation.食事バランス || 0,
-        },
-        // {
-        //     label: "安定性",
-        //     score: evaluation.安定性 || 0,
-        // },
+        }
     ];
     const rank = evaluation.rank || null;
 
@@ -85,7 +79,7 @@ const Feedback = () => {
                                 { name: "", values: scores.map((s) => s.score), color: "rgba(255, 188, 52, 0.6)" },
                             ]}
                             maxValues={[5, 5, 5]}
-                            chartHeight="150px"
+                            chartHeight="140px"
                             unit=""
                         />
                     </UpperPart>
@@ -97,7 +91,7 @@ const Feedback = () => {
                         フィードバック
                     </Typography>
                     <Typography variant="body1">
-                        {sampleFeedback}
+                        {message}
                     </Typography>
                 </Grid>
             </Grid>
@@ -114,12 +108,12 @@ const Container = styled.div`
 `
 
 const UpperPart = styled.div`
-    height: 180px;
+    height: 150px;
     width: 100%;
     background-color: rgba(0, 255, 0, 0.3);
 `
 
 const BottomPart = styled.div`
-    height: 200px;
+    height: 230px;
     background-color: rgba(120, 0, 0, 0.3);
 `

@@ -8,7 +8,8 @@ import axios from "axios";
 const user_id = "test-user-123";
 
 const WeightRecord = ({ date }) => {
-    const [weight, setWeight] = useState(48);
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const [weight, setWeight] = useState(userData.weight);
     const [message, setMessage] = useState("");
 
     const saveToLocalStorage = (weightData) => {
@@ -39,25 +40,25 @@ const WeightRecord = ({ date }) => {
     };
 
     // 前日のデータを削除する関数
-    const removePreviousDayData = () => {
-        const storedData = localStorage.getItem("weightRecords");
-        if (!storedData) return;
+    // const removePreviousDayData = () => {
+    //     const storedData = localStorage.getItem("weightRecords");
+    //     if (!storedData) return;
 
-        const records = JSON.parse(storedData);
-        // const today = new Date().toISOString().split('T')[0]; // 今日の日付を取得
-        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]; // 昨日の日付を取得
+    //     const records = JSON.parse(storedData);
+    //     // const today = new Date().toISOString().split('T')[0]; // 今日の日付を取得
+    //     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]; // 昨日の日付を取得
 
-        // 昨日の日付のデータを削除
-        if (records[yesterday]) {
-            delete records[yesterday];
-            localStorage.setItem("weightRecords", JSON.stringify(records));
-        }
-    };
+    //     // 昨日の日付のデータを削除
+    //     if (records[yesterday]) {
+    //         delete records[yesterday];
+    //         localStorage.setItem("weightRecords", JSON.stringify(records));
+    //     }
+    // };
 
-    useEffect(() => {
-        // アプリが起動した際、またはコンポーネントがマウントされた際に前日のデータを削除
-        removePreviousDayData();
-    }, []);
+    // useEffect(() => {
+    //     // アプリが起動した際、またはコンポーネントがマウントされた際に前日のデータを削除
+    //     removePreviousDayData();
+    // }, []);
 
     // firestore に保存する仕組み
     const recordWeightToFS = async (weightData) => {
@@ -81,7 +82,7 @@ const WeightRecord = ({ date }) => {
             user_id: user_id
         };
         saveToLocalStorage(weightData);
-        recordWeightToFS(weightData);
+        // recordWeightToFS(weightData);
     }
     return (
         <>

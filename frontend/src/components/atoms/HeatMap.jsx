@@ -1,23 +1,24 @@
 import React from "react";
 import ReactEChart from "echarts-for-react";
 
-// 日付の範囲を取得するヘルパー関数
 const getDateRange = (data) => {
     if (data.length === 0) return null;
-    
+
     const dates = data.map(item => new Date(item[0]));
     const minDate = new Date(Math.min(...dates)); // 最小日付
     const maxDate = new Date(Math.max(...dates)); // 最大日付
-    
-    const startYear = minDate.getFullYear();
-    const startMonth = (minDate.getMonth() + 1).toString().padStart(2, '0');
-    
-    const endYear = maxDate.getFullYear();
-    const endMonth = (maxDate.getMonth() + 1).toString().padStart(2, '0');
-    
-    // "YYYY-MM" 形式の範囲を返す
-    return [`${startYear}-${startMonth}`, `${endYear}-${endMonth}`];
+
+    // YYYY-MM-DD の形式で範囲を返す
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const day = date.getDate().toString().padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
+
+    return [formatDate(minDate), formatDate(maxDate)];
 };
+
 
 const HeatMap = ({ data, max = 4, title, height = "150px" }) => {
     const range = getDateRange(data);

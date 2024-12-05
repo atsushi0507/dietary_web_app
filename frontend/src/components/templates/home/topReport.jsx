@@ -6,8 +6,13 @@ import CustomProgressBar from "@/components/atoms/customProgressBar";
 import RadarChart from "@/components/atoms/RadarChart";
 import useCalcWeeklyNutrition from "@/hooks/useCalcWeeklyNutrition";
 import useEvaluateDiet from "@/hooks/useEvaluateDiet";
+import useGenerateFeedback from "@/hooks/useGenerateFeedback";
+import { useRouter } from "next/navigation";
 
 const TopReport = ({mealData, person}) => {
+    const MAX_LENGTH = 78;
+    const router = useRouter();
+
     const allMeals = mealData.flatMap(({meal_type, nutrition}) => 
         nutrition.map(({menu, calories, protein, fat, carb}) => ({menu, calories, protein, fat, carb, meal_type}))
     );
@@ -25,6 +30,12 @@ const TopReport = ({mealData, person}) => {
     // 総合評価
     const weeklyData = useCalcWeeklyNutrition();
     const evaluate = useEvaluateDiet(weeklyData, person);
+    const message = useGenerateFeedback(evaluate)
+    const truncatedMessage = message.length > MAX_LENGTH ? `${message.slice(0, MAX_LENGTH)}...` : message;
+
+    const handleSummaryRedirect = () => {
+        router.push('/summary');
+    };
 
     return (
         <TopContainer>
@@ -83,9 +94,15 @@ const TopReport = ({mealData, person}) => {
                 <div style={{height: "120px"}}>
                         <FeedbackArea>
                             <Typography variant="body1">
-                                脂質が多かったので、次の食事では低脂質な食事を心がけましょう。xxx などがおすすめです。
-                                必要なマテリアルは揃ったが、並べ方は工夫の余地あり。
-                                Progress bar and score area need more information.
+                                {truncatedMessage}
+                                {message.length > MAX_LENGTH && (
+                                    <span>
+                                        {' '}
+                                        <span onClick={handleSummaryRedirect} style={{ color: 'blue', cursor: 'pointer' }}>
+                                            サマリーへ
+                                        </span>
+                                    </span>
+                                )}
                             </Typography>
                         </FeedbackArea>
                     </div>

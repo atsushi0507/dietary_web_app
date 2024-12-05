@@ -67,6 +67,17 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
         setSelectedMeal(null);
     };
 
+    const handleDeleteMenu = (menu) => {
+        setMenuSelections((prevSelections) => {
+            // 新しいオブジェクトを作成して対象のキーを削除
+            const updatedSelections = { ...prevSelections };
+            delete updatedSelections[menu];
+            return updatedSelections;
+        });
+
+        setSampleData((prevData) => prevData.filter((item) => item.menu !== menu));
+    }
+
     const saveMealRecord = (mealData) => {
         const mealRecords = JSON.parse(localStorage.getItem("mealRecord")) || {};
 
@@ -110,6 +121,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
                         key={data.menu}
                         menuData={data}
                         onVolumeChange={handleMenuChange}
+                        onDelete={handleDeleteMenu}
                     />
                 ))}
             {doSearch &&
