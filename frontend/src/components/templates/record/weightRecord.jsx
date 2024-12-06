@@ -13,52 +13,14 @@ const WeightRecord = ({ date }) => {
     const [message, setMessage] = useState("");
 
     const saveToLocalStorage = (weightData) => {
-        const storedData = localStorage.getItem("weightRecords");
-        const currentDate = new Date().toISOString().split("T")[0];
-        let records = {};
+        let weightRecords = JSON.parse(localStorage.getItem("weightRecords")) || {};
 
-        if (storedData) {
-            records = JSON.parse(storedData);
-        } else {
-            records = {};
-        }
+        if (!weightRecords[date]) weightRecords[date] = parseFloat(weightData.weight);
 
-        // 今日の日付のレコードがない場合、空の配列を作成
-        if (!records[currentDate]) {
-            records[currentDate] = [];
-        }
+        weightRecords[date] = parseFloat(weightData.weight);
 
-        // 新しい体重データを配列に追加
-        records[currentDate].push({
-            weight: weightData.weight,
-            timestamp: weightData.timestamp,
-            date: date,
-            user_id: weightData.user_id,
-        });
-
-        localStorage.setItem("weightRecords", JSON.stringify(records));
+        localStorage.setItem("weightRecords", JSON.stringify(weightRecords));
     };
-
-    // 前日のデータを削除する関数
-    // const removePreviousDayData = () => {
-    //     const storedData = localStorage.getItem("weightRecords");
-    //     if (!storedData) return;
-
-    //     const records = JSON.parse(storedData);
-    //     // const today = new Date().toISOString().split('T')[0]; // 今日の日付を取得
-    //     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]; // 昨日の日付を取得
-
-    //     // 昨日の日付のデータを削除
-    //     if (records[yesterday]) {
-    //         delete records[yesterday];
-    //         localStorage.setItem("weightRecords", JSON.stringify(records));
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     // アプリが起動した際、またはコンポーネントがマウントされた際に前日のデータを削除
-    //     removePreviousDayData();
-    // }, []);
 
     // firestore に保存する仕組み
     const recordWeightToFS = async (weightData) => {
@@ -77,9 +39,7 @@ const WeightRecord = ({ date }) => {
     const handleButton = () => {
         const weightData = {
             weight: weight,
-            timestamp: new Date().toISOString(), // タイムスタンプを付与
-            date: date,
-            user_id: user_id
+            date: date
         };
         saveToLocalStorage(weightData);
         // recordWeightToFS(weightData);

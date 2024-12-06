@@ -7,6 +7,7 @@ import questions from "@/public/setting_questions.json";
 
 const InitialSettingPage = () => {
     const [currentScreen, setCurrentScreen] = useState("setup");
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
 
     const handleAnswersUpdate = (newAnswers) => {
@@ -22,6 +23,7 @@ const InitialSettingPage = () => {
       const handleBack = () => {
         if (currentScreen === "confirmation") {
             setCurrentScreen("setup");
+            setCurrentQuestionIndex(5);
         } else if (currentScreen === "final") {
             setCurrentScreen("confirmation");
         }
@@ -37,6 +39,8 @@ const InitialSettingPage = () => {
                   answers={answers}
                   onNext={handleNext}
                   onAnswersUpdate={handleAnswersUpdate}
+                  currentQuestionIndex={currentQuestionIndex}
+                  setCurrentQuestionIndex={setCurrentQuestionIndex}
                 />
               );
             } else if (currentScreen === "confirmation") {

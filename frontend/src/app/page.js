@@ -1,8 +1,16 @@
 "use client";
-
-import { Button, Box, Container, Typography, Grid, Card, CardContent, Icon } from '@mui/material';
+import Link from '@/components/atoms/Link';
+import { Box, Container, Typography, Grid2 as Grid, Card, CardContent, Icon } from '@mui/material';
+import Button from '@/components/atoms/Button';
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleDoAppButton = () => {
+    router.push("/register_login");
+  }
   return (
     <div>
       {/* ヒーローセクション */}
@@ -14,7 +22,7 @@ export default function Home() {
           <Typography variant="h5" sx={{ mb: 4 }}>
             カロリーとPFCバランスを一目でチェック。簡単な記録で長期的な健康を支援します
           </Typography>
-          <Button variant="contained" color="primary" size="large" sx={{ borderRadius: 3 }}>
+          <Button onClick={handleDoAppButton}>
             アプリを始める
           </Button>
         </Container>
@@ -80,10 +88,30 @@ export default function Home() {
       {/* CTAセクション */}
       <Box sx={{ py: 6, textAlign: 'center' }}>
         <Typography variant="h4" sx={{ mb: 2 }}>健康的な食生活を始めよう！</Typography>
-        <Button variant="contained" color="primary" size="large" sx={{ borderRadius: 3 }}>
+        <Button onClick={handleDoAppButton}>
           今すぐ始める
         </Button>
       </Box>
+      <Footer>
+        <Copyright>&copy; 2024 Atsushi Mizukami. All rights reserved.</Copyright>
+        <p>
+          <Link to="/terms_of_service" external={false}>利用規約</Link> | 
+          <Link to="/privacy_policy" external={false}>個人情報保護ポリシー</Link>
+        </p>
+        <p>Design and Development by Atsushi Mizukami</p>
+      </Footer>
     </div>
   );
 }
+
+
+const Footer = styled.footer`
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+`
+
+const Copyright = styled.p`
+  margin: 10px 0;
+`;

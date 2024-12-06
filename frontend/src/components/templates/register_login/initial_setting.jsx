@@ -2,7 +2,6 @@
 import ProgressBar from "@/components/atoms/ProgressBar";
 import React, { useState } from "react";
 import styled from "styled-components";
-import Title from "@/components/atoms/Title";
 import NumberInput from "@/components/atoms/NumberInput";
 import Calendar from "@/components/atoms/Calendar";
 import RadioButton from "@/components/atoms/RadioButton";
@@ -11,8 +10,7 @@ import BasicAlert from "@/components/atoms/Alert";
 import dayjs from "dayjs";
 import { Typography } from "@mui/material";
 
-const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate, currentQuestionIndex, setCurrentQuestionIndex}) => {
 
     const currentQuestion = questions[currentQuestionIndex];
 
@@ -22,8 +20,6 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
       };
 
     const handleDateChange = (newDate) => {
-        // const formattedDate = newDate ? newDate.format("YYYY/MM/DD") : null; // 日付をフォーマットする
-        // handleAnswerChange(currentQuestion.id, formattedDate); // フォーマットした日付を保存
         handleAnswerChange(currentQuestion.id, newDate);
     };
 
@@ -65,13 +61,15 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate}) => {
             );
         case "radio":
             return currentQuestion.options.map((option) => (
-            <RadioButton
-                key={option}
-                name={currentQuestion.id}
-                value={option}
-                checked={answers[currentQuestion.id] === option}
-                onChange={(e) => handleAnswerChange(currentQuestion.id, e.target.value)}
-            />
+            <div>
+                <RadioButton
+                    key={option}
+                    name={currentQuestion.id}
+                    value={option}
+                    checked={answers[currentQuestion.id] === option}
+                    onChange={(e) => handleAnswerChange(currentQuestion.id, e.target.value)}
+                />
+            </div>
             ));
         default:
             return null;
