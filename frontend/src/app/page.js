@@ -12,7 +12,7 @@ export default function Home() {
     router.push("/register_login");
   }
   return (
-    <div>
+    <>
       {/* ヒーローセクション */}
       <Box sx={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundSize: 'cover', color: 'white', py: 6 }}>
         <Container>
@@ -32,7 +32,7 @@ export default function Home() {
       <Container sx={{ py: 6 }}>
         <Typography variant="h4" sx={{ textAlign: 'center', mb: 4 }}>アプリの特徴</Typography>
         <Grid container spacing={4} justifyContent="center">
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Card>
               <CardContent>
                 <Icon sx={{ fontSize: 50, color: 'primary.main' }}>check_circle</Icon>
@@ -43,7 +43,7 @@ export default function Home() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Card>
               <CardContent>
                 <Icon sx={{ fontSize: 50, color: 'primary.main' }}>dashboard</Icon>
@@ -54,7 +54,7 @@ export default function Home() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Card>
               <CardContent>
                 <Icon sx={{ fontSize: 50, color: 'primary.main' }}>assessment</Icon>
@@ -73,10 +73,10 @@ export default function Home() {
         <Container>
           <Typography variant="h4" sx={{ textAlign: 'center', mb: 4 }}>実際に使ってみると</Typography>
           <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <img src="https://source.unsplash.com/random" alt="食事の例" style={{ width: '100%', borderRadius: 8 }} />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <Typography variant="body1">
                 あなたの食事記録を元に、カロリーやPFCバランスを評価し、毎日のフィードバックが得られます。
               </Typography>
@@ -85,13 +85,14 @@ export default function Home() {
         </Container>
       </Box>
 
-      {/* CTAセクション */}
+      CTAセクション
       <Box sx={{ py: 6, textAlign: 'center' }}>
         <Typography variant="h4" sx={{ mb: 2 }}>健康的な食生活を始めよう！</Typography>
         <Button onClick={handleDoAppButton}>
           今すぐ始める
         </Button>
       </Box>
+      
       <Footer>
         <Copyright>&copy; 2024 Atsushi Mizukami. All rights reserved.</Copyright>
         <p>
@@ -100,7 +101,7 @@ export default function Home() {
         </p>
         <p>Design and Development by Atsushi Mizukami</p>
       </Footer>
-    </div>
+    </>
   );
 }
 

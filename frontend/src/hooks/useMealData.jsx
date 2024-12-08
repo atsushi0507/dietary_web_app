@@ -5,7 +5,9 @@ import sampleDB from "@/public/sampleDB.json";
 const useCalcTodaysNutrition = () => {
     const [nutritionData, setNutritionData] = useState([]);
 
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date(new Date().getTime() + 9 * 60 * 60 * 1000) // UTC+9に変換
+          .toISOString()
+          .split("T")[0];
 
     const calculateNutrition = () => {
         if (typeof window !== "undefined") {

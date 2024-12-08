@@ -55,7 +55,7 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate, currentQu
         case "date":
             return (
             <Calendar
-                value={answers[currentQuestion.id] ? dayjs(answers[currentQuestion.id]) : null} // 既存の回答がある場合は dayjs オブジェクトに変換
+                initialDate={answers[currentQuestion.id] ? dayjs(answers[currentQuestion.id]) : null} // 既存の回答がある場合は dayjs オブジェクトに変換
                 onDateChange={handleDateChange}
             />
             );

@@ -8,7 +8,7 @@ const useCalcWeeklyNutrition = () => {
     const getPastSevenDays = () => {
         const dates = [];
         for (let i = 1; i <= 7; i++) {
-            const date = new Date();
+            const date = new Date(new Date().getTime() + 9 * 60 * 60 * 1000) // UTC+9に変換
             date.setDate(date.getDate() - i);
             dates.push(date.toISOString().split("T")[0]);
         }

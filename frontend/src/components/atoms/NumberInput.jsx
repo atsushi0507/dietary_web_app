@@ -35,5 +35,13 @@ const NumberInput = ({
 export default NumberInput;
 
 const SInput = styled.input`
+  width: 50%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 
+  &:focus {
+    outline: 2px solid #007bff;
+  }
 `

@@ -77,15 +77,13 @@ const Main = ({ onRegisterClick, onResetClick }) => {
             </LoginForm>
 
             <div>
-                <Typography sx={{textAlign: "center"}}>
-                    まだアカウントをお持ちではありませんか？ {
-                        <div onClick={onRegisterClick}>
-                            <StyledLink>
-                                ユーザー登録へ
-                            </StyledLink>
-                        </div>
-                    }
-                </Typography>
+            <Typography sx={{textAlign: "center"}}>
+                まだアカウントをお持ちではありませんか？
+            </Typography>
+            <div onClick={onRegisterClick} style={{ textAlign: "center" }}>
+                <StyledLink>ユーザー登録へ</StyledLink>
+            </div>
+
             </div>
         </Card>
     );
@@ -117,7 +115,7 @@ const Card = styled.div`
     box-shadow: 'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
 `
 
-const StyledLink = styled.p`
+const StyledLink = styled.a`
   text-decoration: underline;
   color: #333;
   cursor: pointer;

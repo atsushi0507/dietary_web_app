@@ -8,10 +8,26 @@ import { useAuth } from "@/contexts/authContext";
 import { auth } from "@/firebase/firebaseConfig";
 import { signOut } from "firebase/auth";
 import BasicAlert from "../atoms/Alert";
+import SettingsIcon from '@mui/icons-material/Settings';
+import LoginIcon from '@mui/icons-material/Login';
+
+import { Box, Avatar, Tooltip, IconButton, Menu, MenuItem } from "@mui/material";
+
+const settings = ["個人設定", "ログアウト"];
 
 const Header = () => {
     const router = useRouter();
     const { isLoggedIn = false } = useAuth();
+
+    const [anchorElUser, setAnchorElUser] = useState(null);
+
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     const clickLogoutButton = async () => {
         try {
@@ -19,6 +35,7 @@ const Header = () => {
             router.push("/");
         } catch (error) {
             <BasicAlert severity={"error"} message={"ログアウトに失敗しました"} />
+            console.error("ログアウトに失敗しました");
         }
     };
 
@@ -40,10 +57,66 @@ const Header = () => {
                 <Link to="/record" external={false}>記録</Link>
                 <Link to="/summary" external={false}>サマリー</Link>
             </Nav>
-            {isLoggedIn
-            ? <Button onClick={clickLogoutButton}>ログアウト</Button>
-            : <Button onClick={clickLoginButton}>ログイン</Button>
-            }
+
+            {/* ユーザーメニュー */}
+            <Box sx={{ flexGrow: 0 }}>
+                {isLoggedIn ? (
+                    // ログインしている場合のメニュー
+                    <>
+                        <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <Avatar>
+                                    <SettingsIcon />
+                                </Avatar>
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: "45px" }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            {settings.map((setting) => (
+                                <MenuItem
+                                key={setting}
+                                onClick={() => {
+                                    handleCloseUserMenu();
+                                    if (setting === "個人設定") {
+                                        router.push("/settings");
+                                    } else if (setting === "ログアウト") {
+                                        clickLogoutButton();
+                                    }
+                                }}
+                            >
+                                <Box sx={{ textAlign: "center", width: "100%" }}>
+                                    {setting}
+                                </Box>
+                            </MenuItem>                                                        
+                            ))}
+                        </Menu>
+                    </>
+                ) : (
+                    // ログインしていない場合のアイコン
+                    <Tooltip title="ログイン">
+                        <IconButton onClick={clickLoginButton} sx={{ p: 0 }}>
+                            <Avatar>
+                                <LoginIcon />
+                            </Avatar>
+                        </IconButton>
+                    </Tooltip>
+                )}
+            </Box>
+
         </HeaderContaint>
     );
 };

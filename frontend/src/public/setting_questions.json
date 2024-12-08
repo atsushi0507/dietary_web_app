@@ -20,7 +20,7 @@
       "confirm": "体重"
     },
     {
-      "id": "birthdate",
+      "id": "birthday",
       "type": "date",
       "label": "誕生日を教えてください",
       "info": "年齢は基礎代謝の推定に大きく関わってきます。",
