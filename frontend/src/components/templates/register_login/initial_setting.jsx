@@ -61,7 +61,7 @@ const InitialSetting = ({ questions, answers, onNext, onAnswersUpdate, currentQu
             );
         case "radio":
             return currentQuestion.options.map((option) => (
-            <div>
+            <div key={option}>
                 <RadioButton
                     key={option}
                     name={currentQuestion.id}

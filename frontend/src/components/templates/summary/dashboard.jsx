@@ -10,6 +10,7 @@ import { useAveragePFC } from "@/hooks/useAveragePFC";
 import { useMealTypeAverageCalories } from "@/hooks/useMealTypeAverageCalories";
 import useMealCount from "@/hooks/useMealCount";
 import useNutrientRatio from "@/hooks/useNutritionRatio";
+import { Typography } from "@mui/material";
 
 const tabOptions = [
     {label: "達成度"},
@@ -59,14 +60,21 @@ const Dashboard = () => {
                 height="300px"
             />
             }
-            {selectedTab === 3 &&
-            <HeatMap
-                title="食事回数"
-                max={4}
-                data={heatmapData}
-                height="300px"
-            />
-            }
+            {selectedTab === 3 && (
+                heatmapData.length > 0 ? (
+                    <HeatMap
+                        title="食事回数"
+                        max={4}
+                        data={heatmapData}
+                        height="300px"
+                    />
+                ) : (
+                    <Typography variant="body1">
+                        食事記録がありません
+                    </Typography>
+                )
+            )}
+
         </Container>
     );
 };
