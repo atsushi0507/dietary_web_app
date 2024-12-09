@@ -62,7 +62,9 @@ const useCalorieAndPFC = (initialValues) => {
     } else if (gender === "女性") {
       BMR = 10 * numericWeight + 6.25 * numericHeight - 5 * age - 161;
     } else {
-      return; // 性別が正しく指定されていない場合、計算しない
+      mens_bmr = 10 * numericWeight + 6.25 * numericHeight - 5 * age + 5;
+      womens_bmr = 10 * numericWeight + 6.25 * numericHeight - 5 * age - 161;
+      return (mens_bmr + womens_bmr) * 0.5;
     }
 
     // 活動レベルによる係数
