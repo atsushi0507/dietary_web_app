@@ -1,9 +1,10 @@
+"use client";
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 
 // 年齢を計算する関数
-const calculateAge = (birthdate) => {
-  const birth = dayjs(birthdate, 'YYYY/MM/DD');
+const calculateAge = (birthday) => {
+  const birth = dayjs(birthday, 'YYYY/MM/DD');
   const today = dayjs();
   return today.diff(birth, 'year');
 };
@@ -44,7 +45,7 @@ const getGoalMultiplier = (goal) => {
 
 // ミフリン・セントジョール方程式を使ってカロリーとPFCを計算するフック
 const useCalorieAndPFC = (initialValues) => {
-  const { gender, birthdate, height, weight, activityLevel, goal } = initialValues;
+  const { gender, birthday, height, weight, activityLevel, goal } = initialValues;
   const numericHeight = Number(height);
   const numericWeight = Number(weight);
   
@@ -53,7 +54,7 @@ const useCalorieAndPFC = (initialValues) => {
 
   useEffect(() => {
     // 年齢を計算
-    const age = calculateAge(birthdate);
+    const age = calculateAge(birthday);
 
     // BMRの計算
     let BMR;
@@ -62,9 +63,9 @@ const useCalorieAndPFC = (initialValues) => {
     } else if (gender === "女性") {
       BMR = 10 * numericWeight + 6.25 * numericHeight - 5 * age - 161;
     } else {
-      mens_bmr = 10 * numericWeight + 6.25 * numericHeight - 5 * age + 5;
-      womens_bmr = 10 * numericWeight + 6.25 * numericHeight - 5 * age - 161;
-      return (mens_bmr + womens_bmr) * 0.5;
+      const mens_bmr = 10 * numericWeight + 6.25 * numericHeight - 5 * age + 5;
+      const womens_bmr = 10 * numericWeight + 6.25 * numericHeight - 5 * age - 161;
+      BMR = (mens_bmr + womens_bmr) * 0.5;
     }
 
     // 活動レベルによる係数
@@ -89,7 +90,7 @@ const useCalorieAndPFC = (initialValues) => {
       fat: Math.round(fatIntake*10) / 10,
       carbs: Math.round(carbsIntake*10) / 10,
     });
-  }, [gender, birthdate, height, weight, activityLevel, goal]);
+  }, [gender, birthday, height, weight, activityLevel, goal]);
 
   return { calorieIntake: calories, ...PFC };
 };

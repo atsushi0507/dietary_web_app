@@ -24,7 +24,8 @@ const Settings = () => {
         setUserInfo(updatedInfo);
     };
 
-    const { calorieIntake, protein, fat, carbs } = useCalorieAndPFC(userInfo);   
+    const { calorieIntake, protein, fat, carbs } = useCalorieAndPFC(userInfo);
+
     const handleSave = () => {
         const updatedUserInfo = { ...userInfo, cal: calorieIntake, protein: protein, fat: fat, carb: carbs };
         localStorage.setItem("userData", JSON.stringify(updatedUserInfo));

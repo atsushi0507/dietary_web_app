@@ -25,7 +25,7 @@ const FinalView = ({ answers, onPrevious}) => {
                 "user_id": uid,
                 "height": parseFloat(answers.height),
                 "weight": parseFloat(answers.weight),
-                "birthday": answers.birthdate,
+                "birthday": answers.birthday,
                 "gender": answers.gender,
                 "activityLevel": answers.activityLevel,
                 "goal": answers.goal,
