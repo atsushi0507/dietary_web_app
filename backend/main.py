@@ -1,6 +1,6 @@
 from app.weight_record import tmp_weight_save_to_firestore
 from app.users import add_user_to_fs, get_user_info
-from models.users import AddUser
+from app.menuRegister import add_menu_data
 import json
 
 def record_weight_to_fs(request):
@@ -124,3 +124,39 @@ def get_user(request):
     }
     return (json.dumps({'error': 'Invalid request method'}), 405, headers)
 
+
+def add_nutrition_data(request):
+    if request.method == 'OPTIONS':
+        # Preflightリクエストに対応するためにヘッダーを設定
+        headers = {
+            'Access-Control-Allow-Origin': '*',  # 必要に応じて特定のオリジンに変更
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        return ('', 204, headers)
+
+    # POSTリクエストへの処理
+    if request.method == 'POST':
+        try:
+            add_menu_data(
+                request
+            )
+
+            # CORSヘッダーを含めたレスポンスを返す
+            headers = {
+                'Access-Control-Allow-Origin': '*'  # 必要に応じて特定のオリジンに変更
+            }
+            return (json.dumps({'message': 'Add menu data successfully!'}), 200, headers)
+
+        except Exception as e:
+            headers = {
+                'Access-Control-Allow-Origin': '*'  # 必要に応じて特定のオリジンに変更
+            }
+            return (json.dumps({'error': f'Failed to add menu data: {str(e)}'}), 500, headers)
+
+    # その他のHTTPメソッドには対応しない
+    headers = {
+        'Access-Control-Allow-Origin': '*'  # 必要に応じて特定のオリジンに変更
+    }
+    return (json.dumps({'error': 'Invalid request method'}), 405, headers)

@@ -17,7 +17,7 @@ const RegisterMealForm = ({ open, onClose, onSubmit, error }) => {
     cal: "",
     protein: "",
     fat: "",
-    carbs: "",
+    carb: "",
     volume: "",
   });
 
@@ -101,14 +101,14 @@ const RegisterMealForm = ({ open, onClose, onSubmit, error }) => {
         <TextField
           margin="dense"
           label="炭水化物 (g)"
-          name="carbs"
+          name="carb"
           fullWidth
           variant="outlined"
           type="number"
-          value={formData.carbs}
+          value={formData.carb}
           onChange={handleChange}
-          error={!!error?.carbs}
-          helperText={error?.carbs}
+          error={!!error?.carb}
+          helperText={error?.carb}
         />
         <TextField
           margin="dense"

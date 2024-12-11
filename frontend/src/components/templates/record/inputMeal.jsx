@@ -6,6 +6,8 @@ import styled from "styled-components";
 import MenuEntry from "@/components/molecules/menuEntry";
 import { Typography } from "@mui/material";
 import RegisterMealForm from "@/components/organisms/RegisterMealForms";
+import { auth } from "@/firebase/firebaseConfig";
+import axios from "axios";
 
 const user_id = "test-user-123";
 
@@ -94,7 +96,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
 
     const validateFormData = (formData) => {
         const errors = {};
-        const floatFields = ["cal", "protein", "fat", "carbs", "volume"];
+        const floatFields = ["cal", "protein", "fat", "carb", "volume"];
     
         // メニュー名のチェック
         if (!formData.menu.trim()) {
@@ -113,7 +115,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
         return errors;
       };
 
-      const handleFormSubmit = (formData) => {
+      const handleFormSubmit = async (formData) => {
         const errors = validateFormData(formData);
     
         if (Object.keys(errors).length > 0) {
@@ -122,14 +124,26 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
         }
     
         setError(null); // エラーをリセット
-        console.log("Registered data:", {
-          ...formData,
-          cal: parseFloat(formData.cal).toFixed(1),
-          protein: parseFloat(formData.protein).toFixed(1),
-          fat: parseFloat(formData.fat).toFixed(1),
-          carbs: parseFloat(formData.carbs).toFixed(1),
-          volume: parseFloat(formData.volume).toFixed(1),
-        });
+
+        const registerData = {
+            menu: formData.menu,
+            cal: parseFloat(formData.cal),
+            protein: parseFloat(formData.protein),
+            fat: parseFloat(formData.fat),
+            carb: parseFloat(formData.carb),
+            volume: parseFloat(formData.volume),
+            createdBy: auth.currentUser.uid,
+            isVerified: false
+        };
+        try {
+            const response = await axios.post(
+                "https://asia-northeast1-dietary-web-app.cloudfunctions.net/add_nutrition_data",
+                registerData
+            );
+            console.log("Nutrition Data added successfully")
+        } catch (error) {
+            console.error("Error at add nutrition data erorr: ", error.message);
+        }
     
         // Firestoreに登録する処理をここに追加
     
