@@ -1,6 +1,7 @@
 from app.weight_record import tmp_weight_save_to_firestore
 from app.users import add_user_to_fs, get_user_info
 from app.menuRegister import add_menu_data
+from app.nutrition import get_nutrition_data
 import json
 
 def record_weight_to_fs(request):
@@ -158,5 +159,41 @@ def add_nutrition_data(request):
     # その他のHTTPメソッドには対応しない
     headers = {
         'Access-Control-Allow-Origin': '*'  # 必要に応じて特定のオリジンに変更
+    }
+    return (json.dumps({'error': 'Invalid request method'}), 405, headers)
+
+
+def get_nutrition(request):
+    # Preflight リクエスト対応（OPTIONS メソッド）
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        return ('', 204, headers)
+
+    # GET リクエスト処理
+    if request.method == 'GET':
+        try:
+            nutrition_data = get_nutrition_data()
+            headers = {
+                'Access-Control-Allow-Origin': '*',  # 全オリジンを許可
+                'Content-Type': 'application/json'   # JSON レスポンス形式を明示
+            }
+            return (json.dumps({"nutrition_data": nutrition_data}), 200, headers)
+
+        except Exception as e:
+            headers = {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            }
+            return (json.dumps({'error': f'Failed to retrieve nutrition data: {str(e)}'}), 500, headers)
+
+    # その他の HTTP メソッドに対応しない場合
+    headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
     }
     return (json.dumps({'error': 'Invalid request method'}), 405, headers)

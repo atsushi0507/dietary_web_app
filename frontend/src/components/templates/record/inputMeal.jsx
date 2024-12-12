@@ -11,15 +11,7 @@ import axios from "axios";
 
 const user_id = "test-user-123";
 
-const sampleSearchData = [
-    { menu: "チキンカツ", cal: 270.0 },
-    { menu: "とんかつ", cal: 310.0 },
-    { menu: "タコス", cal: 189.0 },
-    { menu: "コーヒー牛乳", cal: 210 },
-    { menu: "チャーハン", cal: 168 },
-];
-
-const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
+const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
     const [strMenu, setStrMenu] = useState("");
     const [doSearch, setDoSearch] = useState(false);
     const [menuSelections, setMenuSelections] = useState({});
@@ -179,7 +171,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal }) => {
         setDoSearch(false);
     };
 
-    const filteredResults = sampleSearchData.filter((data) =>
+    const filteredResults = menuData.filter((data) => 
         data.menu.includes(strMenu)
     );
 

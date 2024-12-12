@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import BasicTab from "@/components/atoms/Tab";
 import MealRecord from "./mealRecord";
 import WeightRecord from "./weightRecord";
+import { useMenuData } from "@/hooks/useMenuData";
 
 const tabOptions = [
     {label: "食事", icon: null},
@@ -15,6 +16,8 @@ const tabOptions = [
 const RecordTop = () => {
     const [date, setDate] = useState(dayjs());
     const [selectedTab, setSelectedTab] = useState(0);
+
+    const { menuData, loading, refetch } = useMenuData();
 
     const convertToDate =(dateString) => {
         const date = new Date(dateString);
@@ -48,7 +51,7 @@ const RecordTop = () => {
                     value={selectedTab}
                     onChange={handleSelectedTab}
                 />
-                {selectedTab === 0 && <MealRecord date={convertToDate(date)}/>}
+                {selectedTab === 0 && <MealRecord date={convertToDate(date)} menuData={menuData}/>}
                 {selectedTab === 1 && <WeightRecord date={convertToDate(date)}/>}
             </Grid>
         </Grid>

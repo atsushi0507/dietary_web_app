@@ -7,6 +7,8 @@ import Calendar from "@/components/atoms/Calendar"; // 自作コンポーネン�
 import styled from "styled-components";
 import Button from "@/components/atoms/Button";
 import useCalorieAndPFC from "@/hooks/useCalorieAndPFC";
+import axios from "axios";
+import { auth } from "@/firebase/firebaseConfig";
 
 const Settings = () => {
     const [userInfo, setUserInfo] = useState({});
@@ -26,9 +28,22 @@ const Settings = () => {
 
     const { calorieIntake, protein, fat, carbs } = useCalorieAndPFC(userInfo);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const updatedUserInfo = { ...userInfo, cal: calorieIntake, protein: protein, fat: fat, carb: carbs };
         localStorage.setItem("userData", JSON.stringify(updatedUserInfo));
+
+        try {
+            const user = auth.currentUser;
+            updatedUserInfo.user_id = user.uid;
+            const response = await axios.post(
+                "https://asia-northeast1-dietary-web-app.cloudfunctions.net/add_user",
+                updatedUserInfo
+            );
+
+            console.log("User data updated to localStorage");
+        } catch (error) {
+            console.error("Error at the user data update: ", error.message);
+        }
     }
 
     return (

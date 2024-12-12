@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       {/* ヒーローセクション */}
-      <Box sx={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundSize: 'cover', color: 'white', py: 6 }}>
+      <Box sx={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundSize: 'cover', backgroundPosition: "center", color: 'white', py: 6 }}>
         <Container>
           <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>
             食事を簡単に管理して、目指す健康的なバランスを
