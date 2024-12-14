@@ -4,6 +4,7 @@ import { Box, Container, Typography, Grid2 as Grid, Card, CardContent, Icon } fr
 import Button from '@/components/atoms/Button';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
+import LandingPage from '@/components/templates/landingpage/LandingPage';
 
 export default function Home() {
   const router = useRouter();
@@ -13,8 +14,9 @@ export default function Home() {
   }
   return (
     <>
+      <LandingPage/>
       {/* ヒーローセクション */}
-      <Box sx={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundSize: 'cover', backgroundPosition: "center", color: 'white', py: 6 }}>
+      {/* <Box sx={{ backgroundImage: 'url(https://source.unsplash.com/random)', backgroundSize: 'cover', backgroundPosition: "center", color: 'white', py: 6 }}>
         <Container>
           <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>
             食事を簡単に管理して、目指す健康的なバランスを
@@ -26,9 +28,11 @@ export default function Home() {
             アプリを始める
           </Button>
         </Container>
-      </Box>
+      </Box> */}
 
-      {/* アプリの特徴セクション */}
+
+
+      {/* アプリの特徴セクション
       <Container sx={{ py: 6 }}>
         <Typography variant="h4" sx={{ textAlign: 'center', mb: 4 }}>アプリの特徴</Typography>
         <Grid container spacing={4} justifyContent="center">
@@ -69,7 +73,7 @@ export default function Home() {
       </Container>
 
       {/* 実際の利用シーンセクション */}
-      <Box sx={{ backgroundColor: '#f7f7f7', py: 6 }}>
+      {/* <Box sx={{ backgroundColor: '#f7f7f7', py: 6 }}>
         <Container>
           <Typography variant="h4" sx={{ textAlign: 'center', mb: 4 }}>実際に使ってみると</Typography>
           <Grid container spacing={4}>
@@ -91,7 +95,7 @@ export default function Home() {
         <Button onClick={handleDoAppButton}>
           今すぐ始める
         </Button>
-      </Box>
+      </Box> */}
       
       <Footer>
         <Copyright>&copy; 2024 Atsushi Mizukami. All rights reserved.</Copyright>

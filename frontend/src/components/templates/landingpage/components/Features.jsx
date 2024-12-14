@@ -2,7 +2,6 @@ import { Container, Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import React from "react";
 import styled from "styled-components";
-// import CardArea from "./Card";
 
 const Features = () => {
     return (
@@ -10,16 +9,15 @@ const Features = () => {
             id="features"
             sx={{py: {xs: 8, sm: 16}}}
         >
-            <Box sx={{width: { sm: "100%", md: "60%"}}}>
+            <Box marginBottom="20px" sx={{width: { sm: "100%", md: "60%"}}}>
                 <Typography
                     variant="h2"
+                    align="center"
                     sx={{
-                        display: "flex",
-                        flexDirection: {sx: "column", sm: "row"},
                         alignItems: "center"
                     }}
                 >
-                    食事習慣をスコア化します
+                    食事習慣を<br/>スコア化します
                 </Typography>
                 <Typography
                     sx={{
@@ -33,24 +31,67 @@ const Features = () => {
             </Box>
 
             {/* サービス説明エリア */}
-            <Grid container spacing={2} alignItems="center">
+            <Grid container spacing={2} alignItems="center" marginBottom="40px">
                 <Grid size={6}>
-                <CardArea
-                    // backgroundImage="url(https://unsplash.it/120/120)"
-                >
-                    {/* <CardImage 
-                        src="https://unsplash.it/120/120"
-                        alt="hoge"
-                    /> */}
-                </CardArea>
+                    <CardArea
+                        bgimage="/coffee.jpg"
+                    />
                 </Grid>
                 <Grid size={6}>
                     <Typography variant="h4">
                         簡単にスコア化
                     </Typography>
                     <Typography >
-                    食事スコアは、あなたの食事習慣を迅速かつ簡単にスコア化します。視覚的なフィードバックで、すぐに改善点を見つけることができます。
+                        食事スコアは、あなたの食事習慣を迅速かつ簡単にスコア化します。視覚的なフィードバックで、すぐに改善点を見つけることができます。
                     </Typography>
+                </Grid>
+            </Grid>
+
+            <Grid container spacing={2} alignItems="center" marginBottom="40px">
+                <Grid size={6}>
+                    <Typography variant="h4">
+                        詳細な分析
+                    </Typography>
+                    <Typography >
+                        食事スコアは、詳細なビジュアル分析を提供し、あなたの食事習慣の強みと弱みを明確にします。
+                    </Typography>
+                </Grid>
+                <Grid size={6}>
+                    <CardArea
+                        bgimage="/analysis.jpg"
+                    />
+                </Grid>
+            </Grid>
+
+            <Grid container spacing={2} alignItems="center" marginBottom="40px">
+                <Grid size={6}>
+                    <CardArea
+                        bgimage="/kitchen.jpg"
+                    />
+                </Grid>
+                <Grid size={6}>
+                    <Typography variant="h4" align="center" sx={{alignItems: "center"}}>
+                        明確な<br/>フィードバック
+                    </Typography>
+                    <Typography >
+                        具体的なフィードバックを提供し、あなたの食生活を向上させる手助けをします。
+                    </Typography>
+                </Grid>
+            </Grid>
+
+            <Grid container spacing={2} alignItems="center" marginBottom="40px">
+                <Grid size={6}>
+                    <Typography variant="h4">
+                        使いやすさ
+                    </Typography>
+                    <Typography >
+                        食事スコアは、直感的なインターフェースで簡単に使用できます。他のサービスと比べて、迅速かつ効果的に食事習慣を改善することができます。
+                    </Typography>
+                </Grid>
+                <Grid size={6}>
+                    <CardArea
+                        bgimage="/meat.jpg"
+                    />
                 </Grid>
             </Grid>
 
@@ -61,23 +102,16 @@ const Features = () => {
 export default Features;
 
 const CardArea = styled.div`
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    padding: 16px;
-    border: 2px solid #ccc;
-    width: 95%;
-    height: 150px;
-    display: flex;
-    flex-direction: row;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    /* background-image: ${(props) => `url(${props.backgroundImage})`}; */
-    background-size: cover;
-    background-position: center;
-`
-
-const CardImage = styled.img`
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-`
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  border: 2px solid #ccc;
+  width: 95%;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+  background-image: url(${props => props.bgimage});
+`;

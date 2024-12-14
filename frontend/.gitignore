@@ -43,3 +43,5 @@ src/firebase/firebaseConfig.json
 .firebase/
 .firebaserc
 firebase.json
+
+public/*.jpg

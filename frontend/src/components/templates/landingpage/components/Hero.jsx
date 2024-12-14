@@ -65,7 +65,7 @@ const Hero = () => {
                     </Button>
                 </Stack>
                 <StyledBox id="image">
-                    <img src="https://unsplash.it/350/240" style={{objectFit: "cover"}} />
+                    <img src="/hero.jpg" style={{objectFit: "fill", width: "100%", height: "100%"}} />
                 </StyledBox>
             </Container>
         </Box>
@@ -85,15 +85,13 @@ const StyledBox = styled('div')(({ theme }) => ({
     border: '1px solid',
     borderColor: (theme.vars || theme).palette.grey[200],
     boxShadow: '0 0 12px 8px hsla(220, 25%, 80%, 0.2)',
-    // backgroundImage: "url(https://source.unsplash.com/1600x900/?food)",
-    backgroundSize: 'cover',
+    backgroundSize: 'fill',
     [theme.breakpoints.up('sm')]: {
       marginTop: theme.spacing(10),
       height: 700,
     },
     ...theme.applyStyles('dark', {
       boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
-    //   backgroundImage: "url(https://source.unsplash.com/1600x900/?food)",
       outlineColor: 'hsla(220, 20%, 42%, 0.1)',
       borderColor: (theme.vars || theme).palette.grey[700],
     }),
