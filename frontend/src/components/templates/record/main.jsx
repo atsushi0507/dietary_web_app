@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid2";
-import Calendar from "@/components/atoms/Calendar";
 import dayjs from "dayjs";
 import BasicTab from "@/components/atoms/Tab";
 import MealRecord from "./mealRecord";
 import WeightRecord from "./weightRecord";
 import { useMenuData } from "@/hooks/useMenuData";
+import WeeklyCalendar from "@/components/atoms/weeklyCalendar";
 
 const tabOptions = [
     {label: "食事", icon: null},
@@ -40,8 +40,8 @@ const RecordTop = () => {
     return (
         <Grid container direction="column">
             <Grid size={12}>
-                <Calendar 
-                    value={date}
+                <WeeklyCalendar
+                    initialDate={date}
                     onDateChange={handleDateChange}
                 />
             </Grid>

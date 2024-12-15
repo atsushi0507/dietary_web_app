@@ -31,7 +31,7 @@ const RadarChart = ({ title = "Radar Chart", darkMode, indicators, seriesData, m
                 radius: "75%",  // 自動計算されたradiusを使用
                 startAngle: 90,
                 splitNumber: 5,
-                axisNameGap: 8,
+                axisNameGap: 4,
 
                 axisName: {
                     formatter: "{value}",

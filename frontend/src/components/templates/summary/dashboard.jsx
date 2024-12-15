@@ -84,7 +84,10 @@ export default Dashboard;
 const Container = styled.div`
     height: 320px;
     width: 100%;
-    background-color: rgba(255, 125, 0, 0.3);
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    border-radius: 4px;
     justify-content: "center";
     overflow: auto;
 `

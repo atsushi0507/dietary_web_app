@@ -38,7 +38,7 @@ const Features = () => {
                     />
                 </Grid>
                 <Grid size={6}>
-                    <Typography variant="h4">
+                    <Typography variant="h4" align="center">
                         簡単にスコア化
                     </Typography>
                     <Typography >
@@ -49,7 +49,7 @@ const Features = () => {
 
             <Grid container spacing={2} alignItems="center" marginBottom="40px">
                 <Grid size={6}>
-                    <Typography variant="h4">
+                    <Typography variant="h4" align="center">
                         詳細な分析
                     </Typography>
                     <Typography >
@@ -81,7 +81,7 @@ const Features = () => {
 
             <Grid container spacing={2} alignItems="center" marginBottom="40px">
                 <Grid size={6}>
-                    <Typography variant="h4">
+                    <Typography variant="h4" align="center">
                         使いやすさ
                     </Typography>
                     <Typography >

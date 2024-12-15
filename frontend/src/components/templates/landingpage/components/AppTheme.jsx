@@ -2,6 +2,8 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { colorSchemes, typography, shadows, shape } from "./themePrimitives";
+import { surfacesCustomizations } from "./customizations/surfaces";
+import { feedbackCustomizations } from "./customizations/feedback";
 
 const AppTheme = (props) => {
     const { children, disableCustomTheme, themeComponents } = props;
@@ -16,7 +18,11 @@ const AppTheme = (props) => {
             colorSchemes,
             typography,
             shadows,
-            shape
+            shape,
+            components: {
+                ...surfacesCustomizations,
+                ...feedbackCustomizations
+            }
         });
     }, [disableCustomTheme, themeComponents]);
     if (disableCustomTheme) {
@@ -30,7 +36,7 @@ const AppTheme = (props) => {
 }
 
 AppTheme.propTypes = {
-    chidlren: PropTypes.node,
+    children: PropTypes.node,
     disableCustomTheme: PropTypes.bool,
     themeComponents: PropTypes.object
 };

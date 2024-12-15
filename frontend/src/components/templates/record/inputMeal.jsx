@@ -192,14 +192,39 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
                         onDelete={handleDeleteMenu}
                     />
                 ))}
-            {doSearch && filteredResults.length > 0 &&
+            {/* {doSearch && filteredResults.length > 0 &&
                 filteredResults.map((data) => (
                     <MenuEntry
                         key={data.menu}
                         menuResult={data}
                         handleAddMeal={handleSelectedMenu}
                     />
-                ))}
+                )
+            )} */}
+            {doSearch && filteredResults.length > 0 && (
+                <>
+                    {filteredResults.map((data) => (
+                    <MenuEntry
+                        key={data.menu}
+                        menuResult={data}
+                        handleAddMeal={handleSelectedMenu}
+                    />
+                    ))}
+                    
+                    {/* 最後にリンクとフォームを表示 */}
+                    <StyledLink onClick={handleFormOpen}>
+                    <Typography variant="body1">新しいメニューを登録</Typography>
+                    </StyledLink>
+                    
+                    {/* フォームを開いた場合に表示 */}
+                    <RegisterMealForm
+                    open={isFormOpen}
+                    onClose={handleFormClose}
+                    onSubmit={handleFormSubmit}
+                    error={error}
+                    />
+                </>
+            )}
             {doSearch && filteredResults.length === 0 && (
                 <>
                     <StyledLink onClick={handleFormOpen}>

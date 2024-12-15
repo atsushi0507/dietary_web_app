@@ -34,7 +34,7 @@ const MealRecord = ({ date, menuData }) => {
                     )
                 })}
             </ButtonArray>
-            {selectedMeal === null && <MealRecordDisplay />}
+            {selectedMeal === null && <MealRecordDisplay date={date}/>}
             {selectedMeal !== null && <InputMeal selectedMeal={selectedMeal} setSelectedMeal={setSelectedMeal} date={date} menuData={menuData}/>}
         </>
     );

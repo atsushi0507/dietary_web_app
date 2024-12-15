@@ -43,11 +43,11 @@ const Feedback = () => {
         <Container>
             <Grid
                 container
-                spacing={1}
+                spacing={0.5}
                 columns={12}
             >
                 <Grid
-                    size={{xs: 6, md: 4, lg: 9}}
+                    size={{xs: 6, lg: 6}}
                 >
                     <UpperPart>
                     <Typography variant={{sx: "h3", md: "h3", lg: "h2"}} fontWeight="bold">
@@ -65,27 +65,32 @@ const Feedback = () => {
                     </UpperPart>
                 </Grid>
                 <Grid
-                    size={{xs: 6, lg: 3}}
+                    size={{xs: 6, lg: 6}}
                 >
-                    <UpperPart>
-                        <Typography variant="subtitle1" sx={{display: "flex", justifyContent: "center"}} fontWeight="bold">
-                            評価項目別得点
-                        </Typography>
-                        <RadarChart 
-                            title=""
-                            darkMode={false}
-                            indicators={["カロリー", "PFC", "バランス"]}
-                            seriesData={[
-                                { name: "", values: scores.map((s) => s.score), color: "rgba(255, 188, 52, 0.6)" },
-                            ]}
-                            maxValues={[5, 5, 5]}
-                            chartHeight="140px"
-                            unit=""
-                        />
-                    </UpperPart>
+                        <RadarChartArea>
+                            <RadarChart 
+                                title=""
+                                darkMode={false}
+                                indicators={["カロリー", "PFC", "バランス"]}
+                                seriesData={[
+                                    { name: "", values: scores.map((s) => s.score), color: "rgba(255, 188, 52, 0.6)" },
+                                ]}
+                                maxValues={[5, 5, 5]}
+                                chartHeight="135px"
+                                unit=""
+                            />
+                        </RadarChartArea>
                 </Grid>
                 <Grid
                     size={{xs: 12}}
+                    padding={"4px"}
+                    boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
+                    border="2px solid #ccc"
+                    borderRadius="4px"
+                    sx={{
+                        height: "224px",
+                        overflow: "auto"
+                    }}
                 >
                     <Typography variant="subtitle1" fontWeight="bold">
                         フィードバック
@@ -103,17 +108,31 @@ export default Feedback;
 
 const Container = styled.div`
     height: 380px;
-    width: 100%;
-    background-color: rgba(0, 0, 255, 0.3);
+    width:100%;
+    justify-content: center;
+    background-color: #f5f5f5;
 `
 
 const UpperPart = styled.div`
     height: 150px;
     width: 100%;
-    background-color: rgba(0, 255, 0, 0.3);
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    border-radius: 4px;
+`
+
+const RadarChartArea= styled.div`
+    height: 150px;
+    width: 100%;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding-top: 16px;
+    margin-right: 16px;
 `
 
 const BottomPart = styled.div`
     height: 230px;
-    background-color: rgba(120, 0, 0, 0.3);
 `

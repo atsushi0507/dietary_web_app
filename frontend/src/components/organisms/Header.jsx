@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Link from "../atoms/Link";
-import Button from "../atoms/Button";
 import { useRouter } from "next/navigation"; // クライアントサイドでのみ動作するフック
 import { useAuth } from "@/contexts/authContext";
 import { auth } from "@/firebase/firebaseConfig";
@@ -50,7 +49,7 @@ const Header = () => {
     return (
         <HeaderContaint>
             <Logo onClick={clickLogo}>
-                <LogoImage src="/sample_logo.png" alt="アプリロゴ" />
+                <LogoImage src="/logo.png" alt="ヘルシーパレット" />
             </Logo>
             <Nav>
                 <Link to="/home" external={false}>ホーム</Link>
@@ -127,20 +126,19 @@ const HeaderContaint = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 10px 2rem;
     background-color: #f8f9fa;
     border-bottom: 1px solid #e0e0e0;
 `;
 
 const Logo = styled.div`
-    font-size: 1.5rem;
-    font-weight: bold;
     cursor: pointer; /* クリック可能にするためにカーソルをポインターに */
 `;
 
 const LogoImage = styled.img`
-    height: 60px; /* ロゴ画像の高さ */
+    height: 50px; /* ロゴ画像の高さ */
     width: auto; /* アスペクト比を維持 */
+    border-radius: 8px;
 `;
 
 const Nav = styled.nav`

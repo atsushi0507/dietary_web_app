@@ -39,11 +39,11 @@ const TopReport = ({mealData, person}) => {
 
     return (
         <TopContainer>
-            <Grid container direction="row">
+            <Grid container direction="row" spacing={0.5}>
                 <Grid size={6}>
-                    <div style={{backgroundColor: "rgba(0, 0, 255, 0.3)", height: "180px"}}>
+                    <ProgressArea>
                         <ProgressBarArea>
-                            <Typography variant="body1">
+                            <Typography variant="body1" marginBottom="4px">
                                 あと{Math.round((person.cal - totalCalories) * 10) / 10} kcal
                             </Typography>
                             <CustomProgressBar
@@ -55,41 +55,36 @@ const TopReport = ({mealData, person}) => {
                                     {start: 90, end: 110, fillColor: "rgba(0, 255, 0, 0.8)"}
                                 ]}
                             />
-                            <Typography variant="body2">
-                                タンパク質: あと {Math.round((person.P - totalProtein) * 10) / 10} g
-                            </Typography>
-                            <Typography variant="body2">
-                                脂質: あと {Math.round(((person.F - totalFat) * 10) / 10)} g
-                            </Typography>
-                            <Typography variant="body2">
-                                炭水化物: あと {Math.round((person.C - totalCarb) * 10) / 10} g
-                            </Typography>
                         </ProgressBarArea>
                         <ScoreArea>
-                            <Typography variant="body1">
-                                直近の食事評価: <strong>{evaluate.rank}</strong>
+                            <Typography variant="body2" sx={{marginBottom: "4px"}}>
+                                タンパク質: あと {Math.round((person.P - totalProtein) * 10) / 10} g
+                            </Typography>
+                            <Typography variant="body2" sx={{marginBottom: "4px"}}>
+                                脂質: あと {Math.round(((person.F - totalFat) * 10) / 10)} g
+                            </Typography>
+                            <Typography variant="body2" sx={{marginBottom: "4px"}}>
+                                炭水化物: あと {Math.round((person.C - totalCarb) * 10) / 10} g
+                            </Typography>
+                            <Typography variant="subtitle1">
+                                食事評価: <strong>{evaluate.rank}</strong>
                             </Typography>
                         </ScoreArea>
-                    </div>
+                    </ProgressArea>
                 </Grid>
                 <Grid size={6}>
-                    <div style={{backgroundColor: "rgba(0, 255, 0, 0.3)", height: "180px"}}>
-                    <Typography variant="subtitle1" sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        PFCバランス
-                    </Typography>
-                    <RadarChart 
-                        title="PFCバランス"
-                        darkMode={false}
-                        // indicators={["タンパク質", "脂質", "炭水化物"]}
-                        indicators={["P", "F", "C"]}
-                        seriesData={[
-                            { name: "", values: [proteinScore, fatScore, carbScore], color: "rgba(255, 188, 52, 0.6)" },
-                        ]}
-                        maxValues={[100, 100, 100]}
-                        chartHeight="180px"
-                    />
-
-                    </div>
+                    <RadarChartAreat>
+                        <RadarChart 
+                            title="PFCバランス"
+                            darkMode={false}
+                            indicators={["P", "F", "C"]}
+                            seriesData={[
+                                { name: "", values: [proteinScore, fatScore, carbScore], color: "rgba(255, 188, 52, 0.6)" },
+                            ]}
+                            maxValues={[100, 100, 100]}
+                            chartHeight="180px"
+                        />
+                    </RadarChartAreat>
                 </Grid>
                 <div style={{height: "120px"}}>
                         <FeedbackArea>
@@ -118,22 +113,41 @@ const TopContainer = styled.div`
     padding: 10px;
 `
 
+const ProgressArea = styled.div`
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    height: 180px;
+    padding-top: 8px;
+`
+
 const ProgressBarArea = styled.div`
-    height: 120px;
-    padding: 10px;
-    background-color: rgba(255, 0, 255, 0.3);
+    height: 60px;
+    padding: 4px;
     display: flex;
     flex-direction: column;
 `
 
 const ScoreArea = styled.div`
-    height: 60px;
-    padding: 10px;
-    background-color: rgba(144, 60, 80, 0.3);
+    height: 120px;
+    padding: 8px;
 `
 
 const FeedbackArea = styled.div`
     height: 120px;
     padding: 10px;
-    background-color: rgba(30, 30, 140, 0.3);
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    border-radius: 4px;
+`
+
+const RadarChartAreat = styled.div`
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    height: 180px;
+    padding-top: 16px;
 `

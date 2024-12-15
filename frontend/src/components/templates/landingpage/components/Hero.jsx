@@ -61,7 +61,7 @@ const Hero = () => {
                     </Typography>
 
                     <Button onClick={handleButton}>
-                        いますぐ始めてみる
+                        いますぐ始める
                     </Button>
                 </Stack>
                 <StyledBox id="image">
