@@ -9,7 +9,7 @@ const withAuth = (WrappedComponent) => {
         const router = useRouter();
         const auth = getAuth();
         const user = auth.currentUser; // ログイン状態を取得
-        const userInfo = localStorage.getItem("userInfo")
+        const userInfo = localStorage.getItem("userData");
 
         useEffect(() => {
             if (!user) {
