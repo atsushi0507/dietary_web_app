@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TextInput from "../atoms/TextInput";
 import Button from "../atoms/Button";
 
-const TextSearch = ({ strMenu, setStrMenu, handleSearch}) => {
+const TextSearch = ({ strMenu, setStrMenu }) => {
     return (
         <Container>
             <TextInput
@@ -12,11 +12,6 @@ const TextSearch = ({ strMenu, setStrMenu, handleSearch}) => {
                 value={strMenu}
                 onChange={setStrMenu}
             />
-            <Button
-                onClick={handleSearch}
-            >
-                検索
-            </Button>
         </Container>
     );
 };

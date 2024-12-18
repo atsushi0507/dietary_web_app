@@ -8,6 +8,7 @@ import { Typography } from "@mui/material";
 import RegisterMealForm from "@/components/organisms/RegisterMealForms";
 import { auth } from "@/firebase/firebaseConfig";
 import axios from "axios";
+import { toHiragana, toKatakana } from "wanakana";
 
 const user_id = "test-user-123";
 
@@ -35,10 +36,12 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
 
     const handleSearch = (e) => {
         setStrMenu(e.target.value);
-    };
-
-    const onClickSearchButton = () => {
-        setDoSearch(true);
+        if (e.target.value.length > 0) {
+            setDoSearch(true);
+        }
+        else {
+            setDoSearch(false);
+        }
     };
 
     const handleRegisterMeal = () => {
@@ -171,8 +174,16 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
         setDoSearch(false);
     };
 
+    const convertToKatakana = (text) => {
+        return toKatakana(text || "");
+    };
+
+    const convertToHiragana = (text) => {
+        return toHiragana(text || "");
+    }
+
     const filteredResults = menuData.filter((data) => 
-        data.menu.includes(strMenu)
+        convertToHiragana(data.menu).includes(convertToHiragana(strMenu))
     );
 
     return (
@@ -180,7 +191,6 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
             <TextSearch
                 strMenu={strMenu}
                 setStrMenu={handleSearch}
-                handleSearch={onClickSearchButton}
             />
 
             {!doSearch &&
@@ -192,17 +202,8 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
                         onDelete={handleDeleteMenu}
                     />
                 ))}
-            {/* {doSearch && filteredResults.length > 0 &&
-                filteredResults.map((data) => (
-                    <MenuEntry
-                        key={data.menu}
-                        menuResult={data}
-                        handleAddMeal={handleSelectedMenu}
-                    />
-                )
-            )} */}
             {doSearch && filteredResults.length > 0 && (
-                <>
+                <SearchResultArea>
                     {filteredResults.map((data) => (
                     <MenuEntry
                         key={data.menu}
@@ -223,7 +224,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
                     onSubmit={handleFormSubmit}
                     error={error}
                     />
-                </>
+                </SearchResultArea>
             )}
             {doSearch && filteredResults.length === 0 && (
                 <>
@@ -273,3 +274,10 @@ const StyledLink = styled.a`
         color: #00376d;
     }
 `;
+
+const SearchResultArea = styled.div`
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+    margin-bottom: 20px;
+`

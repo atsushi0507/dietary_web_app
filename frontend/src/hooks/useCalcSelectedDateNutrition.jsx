@@ -9,7 +9,6 @@ const useCalcSelectedDateNutrition = (date) => {
         if (typeof window !== "undefined") {
             const storedData = JSON.parse(localStorage.getItem("mealRecord"));
             if (!storedData || !storedData[date]) { 
-                console.log("No data for today!");
                 return [];
             }
 
