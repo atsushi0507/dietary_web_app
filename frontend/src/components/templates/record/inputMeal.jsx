@@ -8,7 +8,8 @@ import { Typography } from "@mui/material";
 import RegisterMealForm from "@/components/organisms/RegisterMealForms";
 import { auth } from "@/firebase/firebaseConfig";
 import axios from "axios";
-import { toHiragana, toKatakana } from "wanakana";
+import { toHiragana } from "wanakana";
+import kuromoji from "kuromoji";
 
 const user_id = "test-user-123";
 
@@ -19,6 +20,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
     const [sampleData, setSampleData] = useState([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // 食事タイプが切り替わった際に状態をリセット
@@ -119,6 +121,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
         }
     
         setError(null); // エラーをリセット
+        setIsLoading(true);
 
         const registerData = {
             menu: formData.menu,
@@ -138,6 +141,8 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
             console.log("Nutrition Data added successfully")
         } catch (error) {
             console.error("Error at add nutrition data erorr: ", error.message);
+        } finally {
+            setIsLoading(false);
         }
     
         // Firestoreに登録する処理をここに追加
@@ -174,11 +179,22 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
         setDoSearch(false);
     };
 
-    const convertToKatakana = (text) => {
-        return toKatakana(text || "");
-    };
+    const convertKanjiToKatakana = (text) => {
+        kuromoji.builder({ dicPath: "/dict" }).build((err, tokenizer) => {
+            if (err) {
+                console.error("Error initializing kuromoji:", err);
+                return;
+            }
+        
+            // const text = "漢字をひらがなに変換";
+            const tokens = tokenizer.tokenize(text);
+        
+            // カタカナ変換
+            return tokens.map((token) => token.reading || token.surface_form).join("");
+    })};
 
     const convertToHiragana = (text) => {
+        // const katakana = convertKanjiToKatakana(text);
         return toHiragana(text || "");
     }
 
@@ -219,10 +235,11 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
                     
                     {/* フォームを開いた場合に表示 */}
                     <RegisterMealForm
-                    open={isFormOpen}
-                    onClose={handleFormClose}
-                    onSubmit={handleFormSubmit}
-                    error={error}
+                        open={isFormOpen}
+                        onClose={handleFormClose}
+                        onSubmit={handleFormSubmit}
+                        error={error}
+                        isLoading={isLoading}
                     />
                 </SearchResultArea>
             )}
@@ -236,6 +253,7 @@ const InputMeal = ({ date, selectedMeal, setSelectedMeal, menuData }) => {
                             onClose={handleFormClose}
                             onSubmit={handleFormSubmit}
                             error={error}
+                            isLoading={isLoading}
                         />
                 </>
             )}
