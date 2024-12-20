@@ -72,7 +72,7 @@ const WeeklyCalendar = ({ initialDate, onDateChange, onClose }) => {
             border: "none",
             cursor: "pointer",
             fontSize: "24px",
-            color: "#007bff",
+            // color: "#",
           }}
         >
           <FaChevronLeft />
@@ -87,7 +87,7 @@ const WeeklyCalendar = ({ initialDate, onDateChange, onClose }) => {
             border: "none",
             cursor: "pointer",
             fontSize: "24px",
-            color: "#007bff",
+            // color: "#007bff",
           }}
         >
           <FaChevronRight />
@@ -102,7 +102,7 @@ const WeeklyCalendar = ({ initialDate, onDateChange, onClose }) => {
               cursor: "pointer",
               padding: "10px",
               border: "1px solid #ccc",
-              borderRadius: "5px",
+              borderRadius: "4px",
               backgroundColor:
                 selectedDate?.toDateString() === day.toDateString() ? "#007bff" : "#fff",
               color: selectedDate?.toDateString() === day.toDateString() ? "#fff" : "#000",

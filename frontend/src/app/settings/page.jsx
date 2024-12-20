@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import questions from "@/public/setting_questions.json";
-import { Box, Typography, Select, MenuItem, Button as MuiButton} from "@mui/material";
+import { Box, Typography, Select, MenuItem, Button as MuiButton, CircularProgress} from "@mui/material";
 import Calendar from "@/components/atoms/Calendar"; // 自作コンポーネント
 import styled from "styled-components";
 import Button from "@/components/atoms/Button";
@@ -13,6 +13,7 @@ import { auth } from "@/firebase/firebaseConfig";
 const Settings = () => {
     const [userInfo, setUserInfo] = useState({});
     const [editDate, setEditDate] = useState(false); // 誕生日の編集フラグ
+    const [isLoading, setIsLoading] = useState(false);
 
     // ローカルストレージからデータを取得
     useEffect(() => {
@@ -31,6 +32,7 @@ const Settings = () => {
     const handleSave = async () => {
         const updatedUserInfo = { ...userInfo, cal: calorieIntake, protein: protein, fat: fat, carb: carbs };
         localStorage.setItem("userData", JSON.stringify(updatedUserInfo));
+        setIsLoading(true);
 
         try {
             const user = auth.currentUser;
@@ -43,6 +45,8 @@ const Settings = () => {
             console.log("User data updated to localStorage");
         } catch (error) {
             console.error("Error at the user data update: ", error.message);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -101,6 +105,13 @@ const Settings = () => {
             <ButtonArray>
                 <Button onClick={handleSave}>保存</Button>
             </ButtonArray>
+
+            {/* ローディングスピナー */}
+            {isLoading && (
+                <Overlay>
+                    <CircularProgress />
+                </Overlay>
+            )}
         </>
     );
 };
@@ -132,3 +143,16 @@ const ButtonArray = styled.div`
     padding: 0 16px;
     margin-right: 8px;
 `
+
+const Overlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 背景の要素より前面に表示 */
+`;

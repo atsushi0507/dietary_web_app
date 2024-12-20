@@ -2,7 +2,6 @@ import IconButton from "@/components/atoms/IconButton";
 import React, { useState } from "react";
 import styled from "styled-components";
 import MealRecordDisplay from "./mealRecordDisplay";
-import mealData from "@/public/sampleMeals.json";
 import InputMeal from "./inputMeal";
 
 const mealType = [
@@ -29,6 +28,7 @@ const MealRecord = ({ date, menuData }) => {
                                 key={meal}
                                 text={meal}
                                 onClick={() => handleClickButton(meal)}
+                                isactive={selectedMeal === meal}
                             />
                         </div>
                     )
