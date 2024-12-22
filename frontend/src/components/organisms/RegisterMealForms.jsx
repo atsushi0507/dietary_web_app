@@ -43,7 +43,7 @@ const RegisterMealForm = ({ open, onClose, onSubmit, error, isLoading }) => {
   return (
     <Dialog
       open={open}
-      TransitionComponent={Transition}
+    //   TransitionComponent={Transition}
       keepMounted
       onClose={handleClose}
       aria-describedby="meal-registration-form"
