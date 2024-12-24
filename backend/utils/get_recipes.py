@@ -46,5 +46,27 @@ for category in json_data["result"]["small"]:
 
 df = df.reset_index(drop=True)
 
-for categoryId in df.categoryId.unique().tolist():
-    print(categoryId)
+result_df = pd.DataFrame()
+for index, row in df.iterrows():
+    print(f"{index}| {row['categoryName']}: {row['categoryId']}")
+    url = f"https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?format=json&categoryId={row['categoryId']}&applicationId={os.environ['DEV_ID']}"
+    res = requests.get(url)
+
+    json_data = json.loads(res.text)
+
+    if not json_data["result"]:
+        continue
+    recipes = json_data["result"]
+
+    for recipe in recipes:
+        tmp_dict = {
+            "categoryName": row["categoryName"],
+            "categoryId": row["categoryId"],
+            "recipeTitle": recipe["recipeTitle"],
+            "recipeMaterial": recipe["recipeMaterial"]
+        }
+        result_df = pd.concat([result_df, pd.DataFrame([tmp_dict])])
+    time.sleep(3)
+
+os.makedirs("output", exist_ok=True)
+result_df.to_csv("output/recipe_list.csv", index=False)
