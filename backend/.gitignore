@@ -1,2 +1,5 @@
 config/dietary-web-app-*.json
 *__pycache__
+
+utils/output
+utils/output/*
