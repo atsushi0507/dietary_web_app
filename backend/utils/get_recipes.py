@@ -59,10 +59,12 @@ result_df = pd.DataFrame(columns=[
     "categoryName", "categoryId", "recipeTitle", 
     "recipeMaterial", "recipeUrl", "materialVolume"
 ])
-result_df.to_csv(output_csv_path, index=False)
+# result_df.to_csv(output_csv_path, index=False)
 
 # レシピの取得とCSVへの追記処理
 for index, row in df.iterrows():
+    if index < 229:
+        continue
     print(f"{index}| {row['categoryName']}: {row['categoryId']}")
     url = f"https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?format=json&categoryId={row['categoryId']}&applicationId={os.environ['DEV_ID']}"
     res = requests.get(url)
