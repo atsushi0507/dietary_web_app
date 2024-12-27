@@ -19,6 +19,7 @@ for index, recipe in recipe_df.iterrows():
         # match = nutrition_df[nutrition_df["食品名"].str.contains(material, na=False)]
         match = find_material_match(material, nutrition_df)
         if match is not None:
+            print(match)
             weight = convert_to_grams(volume)  # 分量をグラムに変換
 
             energy = (float(match["エネルギー(kcal)"]) if not np.isnan(match["エネルギー(kcal)"]) else 0) * weight / 100
